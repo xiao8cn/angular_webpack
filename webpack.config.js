@@ -1,6 +1,6 @@
 let webpack = require('webpack'),
     commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js'),
-    jqueryPlugin = new webpack.ProvidePlugin({$:"jquery",jQuery:"jquery","window.jQuery":"jqery"}),
+    jqueryPlugin = new webpack.ProvidePlugin({$:"jquery",jQuery:"jquery","window.jQuery":"jquery"}),
     hotPlugin = new webpack.HotModuleReplacementPlugin();
 
 module.exports = {
