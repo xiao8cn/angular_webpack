@@ -119,7 +119,7 @@ webpackJsonp([0,1],[
 	scm_web.component("scmComponent", {
 	    template: '<h1>123 {{$ctrl.message}}</h1>',
 	    controller: function controller() {
-	        this.message = "123";
+	        this.message = "121343";
 	    }
 	});
 
