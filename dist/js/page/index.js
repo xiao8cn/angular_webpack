@@ -2,137 +2,59 @@ webpackJsonp([0,1],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-	module.exports = __webpack_require__(3);
+	module.exports = __webpack_require__(1);
 
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	/*globals window __webpack_hash__ */
-	if(true) {
-		var lastData;
-		var upToDate = function upToDate() {
-			return lastData.indexOf(__webpack_require__.h()) >= 0;
-		};
-		var check = function check() {
-			module.hot.check(true, function(err, updatedModules) {
-				if(err) {
-					if(module.hot.status() in {
-							abort: 1,
-							fail: 1
-						}) {
-						console.warn("[HMR] Cannot apply update. Need to do a full reload!");
-						console.warn("[HMR] " + err.stack || err.message);
-						window.location.reload();
-					} else {
-						console.warn("[HMR] Update failed: " + err.stack || err.message);
-					}
-					return;
-				}
+	"use strict";
 
-				if(!updatedModules) {
-					console.warn("[HMR] Cannot find update. Need to do a full reload!");
-					console.warn("[HMR] (Probably because of restarting the webpack-dev-server)");
-					window.location.reload();
-					return;
-				}
+	var _button = __webpack_require__(2);
 
-				if(!upToDate()) {
-					check();
-				}
+	__webpack_require__(3);
 
-				__webpack_require__(2)(updatedModules, updatedModules);
+	var scm_web = angular.module("scm", []);
 
-				if(upToDate()) {
-					console.log("[HMR] App is up to date.");
-				}
+	(0, _button.buttonComponent)(scm_web);
 
-			});
-		};
-		var addEventListener = window.addEventListener ? function(eventName, listener) {
-			window.addEventListener(eventName, listener, false);
-		} : function(eventName, listener) {
-			window.attachEvent("on" + eventName, listener);
-		};
-		addEventListener("message", function(event) {
-			if(typeof event.data === "string" && event.data.indexOf("webpackHotUpdate") === 0) {
-				lastData = event.data;
-				if(!upToDate() && module.hot.status() === "idle") {
-					console.log("[HMR] Checking for updates on the server...");
-					check();
-				}
-			}
-		});
-		console.log("[HMR] Waiting for update signal from WDS...");
-	} else {
-		throw new Error("[HMR] Hot Module Replacement is disabled.");
-	}
-
+	scm_web.component("scmComponent", {
+	    template: "<h1>123 {{$ctrl.message}}</h1>\n                <test-component></test-component>",
+	    controller: function controller() {
+	        this.message = "12445343";
+	    }
+	});
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	module.exports = function(updatedModules, renewedModules) {
-		var unacceptedModules = updatedModules.filter(function(moduleId) {
-			return renewedModules && renewedModules.indexOf(moduleId) < 0;
-		});
+	"use strict";
 
-		if(unacceptedModules.length > 0) {
-			console.warn("[HMR] The following modules couldn't be hot updated: (They would need a full reload!)");
-			unacceptedModules.forEach(function(moduleId) {
-				console.warn("[HMR]  - " + moduleId);
-			});
-		}
-
-		if(!renewedModules || renewedModules.length === 0) {
-			console.log("[HMR] Nothing hot updated.");
-		} else {
-			console.log("[HMR] Updated modules:");
-			renewedModules.forEach(function(moduleId) {
-				console.log("[HMR]  - " + moduleId);
-			});
-		}
-	};
-
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.buttonComponent = buttonComponent;
+	function buttonComponent(angular) {
+	    angular.component("testComponent", {
+	        template: '<h1>123 {{$ctrl.message}}</h1>',
+	        controller: function controller() {
+	            this.message = "12445asd343";
+	        }
+	    });
+	}
 
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
 	__webpack_require__(4);
-
-	var scm_web = angular.module("scm", []);
-
-	scm_web.component("scmComponent", {
-	    template: '<h1>123 {{$ctrl.message}}</h1>',
-	    controller: function controller() {
-	        this.message = "121343";
-	    }
-	});
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(5);
 	module.exports = angular;
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**
@@ -31903,10 +31825,10 @@ webpackJsonp([0,1],[
 	})(window);
 
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!

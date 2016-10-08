@@ -33,7 +33,7 @@ module.exports = {
         //加载器配置
         loaders: [
             { test: /\.js$/,exclude:/(node_modules|bower_components)/,loader : 'babel',query : {presets:["es2015"]}},
-            { test: /\.css$/, loader: 'style-loadenr!css-loader' },
+            { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.sass$/, loader: 'style!css!sass?sourceMap'},
             { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
         ]
@@ -41,7 +41,7 @@ module.exports = {
     //其它解决方案配置
     resolve: {
         root: '~/WebStormSpace/angular_webpack/', //绝对路径
-        extensions: ['', '.js', '.json', '.scss'],
+        extensions: ['', '.js', '.json', '.css','sass'],
         alias: {
             AppStore : 'js/stores/AppStores.js',
             ActionType : 'js/actions/ActionType.js',
@@ -51,7 +51,8 @@ module.exports = {
 };
 
 // 编译模式  webpack --display-error-detail
-/*module.exports = {
+/*
+module.exports = {
     //插件项
     plugins: [
         commonsPlugin,
