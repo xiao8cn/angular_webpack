@@ -34,6 +34,7 @@ module.exports = {
         loaders: [
             { test: /\.js$/,exclude:/(node_modules|bower_components)/,loader : 'babel',query : {presets:["es2015"]}},
             { test: /\.css$/, loader: 'style-loader!css-loader' },
+            { test: /\.html$/,loader: 'html' },
             { test: /\.sass$/, loader: 'style!css!sass?sourceMap'},
             { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
         ]
