@@ -32,7 +32,7 @@ module.exports = {
     module: {
         //加载器配置
         loaders: [
-            { test: /\.js$/,exclude:/(node_modules|bower_components)/,loader : 'babel',query : {presets:["es2015"]}},
+            { test: /\.js$/,exclude:/(node_modules|bower_components|jquery.easyui.min.js)/,loader : 'babel',query : {presets:["es2015"]}},
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.html$/,loader: 'html' },
             { test: /\.sass$/, loader: 'style!css!sass?sourceMap'},
@@ -41,12 +41,12 @@ module.exports = {
     },
     //其它解决方案配置
     resolve: {
-        root: '~/WebStormSpace/angular_webpack/', //绝对路径
+        root: '', //绝对路径
         extensions: ['', '.js', '.json', '.css','sass'],
         alias: {
             AppStore : 'js/stores/AppStores.js',
             ActionType : 'js/actions/ActionType.js',
-            AppAction : 'js/actions/AppAction.js'
+            AppAction : 'js/actions/AppAction.js',
         }
     }
 };

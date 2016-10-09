@@ -6,38 +6,12 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            <ul class="nav nav-list">
-                <li class="nav-header">
-                    CRM
-                </li>
-                <li class="active">
-                    <a href="#">客户信息管理</a>
-                </li>
-                <li>
-                    <a href="#">库</a>
-                </li>
-                <li>
-                    <a href="#">应用</a>
-                </li>
-                <li class="nav-header">
-                    功能列表
-                </li>
-                <li>
-                    <a href="#">资料</a>
-                </li>
-                <li>
-                    <a href="#">设置</a>
-                </li>
-                <li class="divider">
-                </li>
-                <li>
-                    <a href="#">帮助</a>
-                </li>
-            </ul>
+            <tree-component></tree-component>
         </div>
         <div class="col-md-10">
-            <table-component source="https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json"
-                             option="{}"></table-component>
+            <ui-view></ui-view>
+            <!--<table-component source="{{source}}"
+                             option="{}"></table-component>-->
         </div>
     </div>
 </div>

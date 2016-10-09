@@ -3,16 +3,14 @@ export function tableComponent(angular) {
     angular.component("tableComponent", {
         template : `<div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>`,
         bindings : {
-            source : "@",
-            option : "@"
+            source : "<"
         },
         controller: function ($scope,$http) {
 
             let ctrl = this,
-                href = ctrl.source,
-                option = JSON.parse(ctrl.option);
+                href = ctrl.source;
 
-            $scope.gridOptions = option;
+            $scope.gridOptions = {};
             $scope.gridOptions.enableCellEditOnFocus = true;
 
             $scope.gridOptions.columnDefs = [
