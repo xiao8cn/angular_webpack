@@ -1,33 +1,47 @@
 export function tableComponent(angular) {
     //然后 DataTables 这样初始化：
     angular.component("tableComponent", {
-        template : `<div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>`,
+        template : `<div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{$ctrl.title}}</h3>
+                          </div>
+                        <div class="panel-body">
+                            <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
+                        </div>  
+                    </div>`,
         bindings : {
-            source : "<"
+            option : "<"
         },
-        controller: function ($scope,$http) {
+        controller: function ($scope,$http,tableService) {
 
             let ctrl = this,
-                href = ctrl.source;
+                option = ctrl.option || {},
+                href = option.href,
+                gridOption = option.gridOption,
+                param = JSON.stringify(option.param);
 
-            $scope.gridOptions = {};
+            this.title = option.title;
+
+            $scope.gridOptions = gridOption;
             $scope.gridOptions.enableCellEditOnFocus = true;
 
-            $scope.gridOptions.columnDefs = [
-                { name: 'id', enableCellEdit: false },
-                { name: 'age', enableCellEditOnFocus:false, displayName:'age (f2/dblClick edit)', width: 200  },
-                { name: 'address.city', enableCellEdit: true, width: 300 },
-                { name: 'name', displayName: 'Name (editOnFocus)', width: 200}
-            ];
+            tableService.jsonpData(href);
 
-            $http.get(href)
-                .success(function(data) {
-                    $scope.gridOptions.data = data;
-                });
+            $http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`)
+                .success(res => {
+                    console.log(res);
+                    $scope.gridOptions.data = res.DBData;
+                })
 
-            $scope.gridOptions.onRegisterApi = function(gridApi){
-                $scope.gridApi = gridApi;
-            };
+
+            // $http.get(href)
+            //     .success(function(data) {
+            //         $scope.gridOptions.data = data;
+            //     });
+
+            // $scope.gridOptions.onRegisterApi = function(gridApi){
+            //     $scope.gridApi = gridApi;
+            // };
         }
     })
 }

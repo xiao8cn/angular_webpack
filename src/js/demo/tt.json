@@ -1,0 +1,17 @@
+{
+  "RequestID":"9999",
+  "RequestFormat":"JSON",
+  "SessionKey":"4428ee56-77e3-46d3-9270-7782caffc139",
+  "SessionTimeout":"60",
+  "Version":"1.0",
+  "DBRequest":{
+    "Field":[
+      "ALLFIELDS"
+    ],
+    "Where":"1=1 order by GID desc",
+    "Page":{
+      "Start":"1",
+      "End":"10"
+    }
+  }
+}
