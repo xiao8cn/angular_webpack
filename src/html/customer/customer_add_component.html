@@ -1,76 +1,135 @@
-<div class="modal-header">
+<div class="modal-header" xmlns="http://www.w3.org/1999/html">
     <h3 class="modal-title" id="modal-title">客户信息新增</h3>
 </div>
 <div class="modal-body" id="modal-body">
     <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <div class="col-md-4">
-                    <small><strong>客户编号：</strong></small><input type="text" class="form-inline" placeholder="客户编号" disabled="disabled"/>
-                </div>
-                <div class="col-md-4">
-                    <small><strong>中文名称：</strong></small><input type="text" class="form-inline" placeholder="中文名称" />
-                </div>
-                <div class="col-md-4">
-                    <small><strong>英文名称：</strong></small><input type="text" class="form-inline" placeholder="英文名称" />
-                </div>
-                <br/>
-                <br/>
-                <div class="col-md-4">
-                    <small><strong>法人姓名：</strong></small><input type="text" class="form-inline" placeholder="法人姓名"/>
-                </div>
-                <div class="col-md-4">
-                    <small><strong>税号：</strong></small><input type="text" class="form-inline" placeholder="税号" />
-                </div>
-                <div class="col-md-4">
-                    <small><strong>企业类型：</strong></small>
-                    <!--<input type="text" class="form-inline" placeholder="企业类型" />-->
-                    <ui-select ng-model="$ctrl.item.selected" theme="select2" ng-disabled="ctrl.disabled" style="width:180px" title="Choose a person">
-                        <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.text}}</ui-select-match>
-                        <ui-select-choices repeat="item in $ctrl.CUSTOMER_TYPE | propsFilter: {id: $select.search, text: $select.search}">
-                            <div>{{item.text}}</div>
-                            <small>
-                                id: {{item.id}}
-                                text: <span>{{item.text}}</span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
-                <br/>
-                <br/>
-                <div class="col-md-4">
-                    <p class="input-group">
-                        <small><strong>营业日期：</strong></small>
-                        <input type="text" class="form-inline" uib-datepicker-popup ng-model="dt" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="open()"/>
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <small><strong>信用额度：</strong></small><input type="text" class="form-inline" placeholder="信用额度" />
-                </div>
-                <div class="col-md-4">
-                    <small><strong>已用额度：</strong></small><input type="text" class="form-inline" placeholder="已用额度" />
+        <form role="form" name="myForm" ng-submit="submitForm(myForm.$valid)" class="form-horizontal" novalidate>
+            <div class="col-md-12">
+                <div class="form-group has-feedback">
+                    <div class="col-md-2">
+                        <small><strong>客户编号：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input ng-required="true" type="text" name="customer_no" class="form-control" placeholder="客户编号" disabled="disabled"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.customer_no.$dirty && myForm.customer_no.$valid"></span>
+                    </div>
+
+                    <div class="col-md-2">
+                        <small><strong>中文名称：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="NAME_CN" required placeholder="中文名称" ng-model="customer.NAME_CN"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.NAME_CN.$dirty && myForm.NAME_CN.$valid"></span>
+                    </div>
                 </div>
 
-                <br/>
-                <br/>
-                <div class="col-md-4">
-                    <small><strong>发票种类：</strong></small><!--<input type="text" class="form-inline" placeholder="发票种类" />-->
-                    <ui-select ng-model="$ctrl.item.selected" theme="select2" ng-disabled="ctrl.disabled" style="width:180px" title="Choose a person">
-                        <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.text}}</ui-select-match>
-                        <ui-select-choices repeat="item in $ctrl.INVOICE_TYPE | propsFilter: {id: $select.search, text: $select.search}">
-                            <div>{{item.text}}</div>
-                            <small>
-                                id: {{item.id}}
-                                text: <span>{{item.text}}</span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
+                <div class="form-group has-feedback">
+                    <div class="col-md-2">
+                        <small><strong>英文名称：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="NAME_EN" placeholder="英文名称" required ng-model="customer.NAME_EN"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.NAME_EN.$dirty && myForm.NAME_EN.$valid"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>法人姓名：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="LEGAL_PERSON" ng-model="customer.LEGAL_PERSON" placeholder="法人姓名" required/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.LEGAL_PERSON.$dirty && myForm.LEGAL_PERSON.$valid"></span>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <small><strong>信用额度控制：</strong></small><input type="checkbox" ng-model="IS_CREDIT">
+
+                <div class="form-group has-feedback">
+                    <div class="col-md-2">
+                        <small><strong>税号：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TAX" placeholder="税号" required ng-model="customer.TAX"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.TAX.$dirty && myForm.TAX.$valid"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>企业类型：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <ui-select  ng-model="customer.CUSTOMER_TYPE" theme="select2" style="min-width: 200px;" title="Choose a person">
+                            <ui-select-match placeholder="请选择">{{$select.selected.text}}</ui-select-match>
+                            <ui-select-choices repeat="cust in $ctrl.CUSTOMER_TYPE | propsFilter: {id: $select.search, text: $select.search}">
+                                <div>{{cust.text}}</div>
+                                <small>
+                                    id: {{cust.id}}
+                                    text: <span>{{cust.text}}</span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <small><strong>往来户：</strong></small><input type="text" class="form-inline" placeholder="往来户" />
+
+                <div class="form-group has-feedback">
+                    <div class="col-md-2">
+                        <small><strong>营业日期：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" uib-datepicker-popup ng-model="customer.BUSINESS_DATE" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="open()"/>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>信用额度：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="CREDIT_LIMIT" placeholder="信用额度" required ng-model="customer.CREDIT_LIMIT"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.CREDIT_LIMIT.$dirty && myForm.CREDIT_LIMIT.$valid"></span>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <div class="col-md-2">
+                        <small><strong>已用额度：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="CREDIT" placeholder="信用额度" required ng-model="customer.CREDIT"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.CREDIT.$dirty && myForm.CREDIT.$valid"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>发票种类：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <ui-select ng-model="customer.INVOICE_TYPE" theme="select2" style="width:180px" title="Choose a person">
+                            <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.text}}</ui-select-match>
+                            <ui-select-choices repeat="invoice in $ctrl.INVOICE_TYPE | propsFilter: {id: $select.search, text: $select.search}">
+                                <div>{{invoice.text}}</div>
+                                <small>
+                                    id: {{invoice.id}}
+                                    text: <span>{{invoice.text}}</span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <div class="col-md-2">
+                        <small><strong>信用额度控制：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="IS_CREDIT" placeholder="信用额度" required ng-model="customer.IS_CREDIT"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.IS_CREDIT.$dirty && myForm.IS_CREDIT.$valid"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <small><strong>往来户：</strong></small>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="CONTACT_CUST_NAME_CN" placeholder="信用额度" required ng-model="customer.CONTACT_CUST_NAME_CN"/>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
+                              ng-show="myForm.CONTACT_CUST_NAME_CN.$dirty && myForm.CONTACT_CUST_NAME_CN.$valid"></span>
+                    </div>
                 </div>
 
                 <br/>
@@ -157,9 +216,9 @@
                     <small><strong>渠道：</strong></small><input type="text" class="form-inline" placeholder="客户重要程度" />
                 </div>
             </div>
-
-        </div>
+        </form>
     </div>
+
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">保存</button>

@@ -65,7 +65,9 @@ export function customerAddComponent() {
                     }
                 };
 
-                param = JSON.stringify(param);
+            $scope.customer={};
+
+            param = JSON.stringify(param);
 
             $http.jsonp(`http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf?callback=JSON_CALLBACK&param=${param}`)
                 .success(res => {
@@ -97,6 +99,7 @@ export function customerAddComponent() {
 
             $scope.open = function() {
                 $scope.popup.opened = true;
+                console.log($scope.customer);
             };
 
             $scope.setDate = function(year, month, day) {
