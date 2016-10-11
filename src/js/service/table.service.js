@@ -1,6 +1,6 @@
-export function tableService(angular){
+export function tableService(){
 
-    angular.service("tableService",function($http){
+    angular.module("scm").service("tableService",function($http){
         var service = {
             jsonpData : function(href) {
 

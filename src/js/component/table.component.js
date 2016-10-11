@@ -1,37 +1,82 @@
-export function tableComponent(angular) {
+export function tableComponent() {
     //然后 DataTables 这样初始化：
-    angular.component("tableComponent", {
+    angular.module("scm").component("tableComponent", {
         template : `<div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{$ctrl.title}}</h3>
                           </div>
                         <div class="panel-body">
-                            <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
-                        </div>  
-                    </div>`,
+                            <div class="btn-group">
+                                <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'add'" ng-click="$ctrl.add()">增加</label>
+                                <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'modify'">修改</label>
+                                <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'delete'">删除</label>
+                            </div>
+                            <div ui-grid="gridOptions" ui-grid-edit  ui-grid-pagination ui-grid-cellnav class="grid"></div>
+                        </div>
+                        <div id="table_modal"></div>
+                    </div>
+                    
+                    `,
         bindings : {
             option : "<"
         },
-        controller: function ($scope,$http,tableService) {
+        controller: function ($scope,$http,i18nService,$uibModal) {
 
             let ctrl = this,
                 option = ctrl.option || {},
                 href = option.href,
+                lang = option.lang || "en",
                 gridOption = option.gridOption,
                 param = JSON.stringify(option.param);
 
+            console.log(lang);
+
+            i18nService.setCurrentLang(lang);
+
             this.title = option.title;
+
+            this.add = function(){
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    size : "lg",
+                    // appendTo: document.querySelector("table_modal"),
+                    component: 'customerAddComponent',
+                    windowClass:"{width:1200px}",
+                    resolve: {
+
+                    }
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $ctrl.selected = selectedItem;
+                }, function () {
+                    $log.info('modal-component dismissed at: ' + new Date());
+                });
+            }
 
             $scope.gridOptions = gridOption;
             $scope.gridOptions.enableCellEditOnFocus = true;
 
-            tableService.jsonpData(href);
+            if(!gridOption.columnDefs){
+                $scope.gridOptions.columnDefs = [
+                    { name: 'id', enableCellEdit: false },
+                    { name: 'age', enableCellEditOnFocus:false, displayName:'age (f2/dblClick edit)', width: 200  },
+                    { name: 'address.city', enableCellEdit: true, width: 300 },
+                    { name: 'name', displayName: 'Name (editOnFocus)', width: 200}
+                ];
+            }
 
-            $http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`)
+            if(param){
+                $http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`)
+                    .success(res => {
+                        $scope.gridOptions.data = res.DBData;
+                    })
+            }else{
+                $http.get(href)
                 .success(res => {
-                    console.log(res);
-                    $scope.gridOptions.data = res.DBData;
+                    $scope.gridOptions.data = res;
                 })
+            }
 
 
             // $http.get(href)

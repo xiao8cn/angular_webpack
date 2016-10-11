@@ -1,0 +1,167 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">客户信息新增</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="col-md-4">
+                    <small><strong>客户编号：</strong></small><input type="text" class="form-inline" placeholder="客户编号" disabled="disabled"/>
+                </div>
+                <div class="col-md-4">
+                    <small><strong>中文名称：</strong></small><input type="text" class="form-inline" placeholder="中文名称" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>英文名称：</strong></small><input type="text" class="form-inline" placeholder="英文名称" />
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>法人姓名：</strong></small><input type="text" class="form-inline" placeholder="法人姓名"/>
+                </div>
+                <div class="col-md-4">
+                    <small><strong>税号：</strong></small><input type="text" class="form-inline" placeholder="税号" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>企业类型：</strong></small>
+                    <!--<input type="text" class="form-inline" placeholder="企业类型" />-->
+                    <ui-select ng-model="$ctrl.item.selected" theme="select2" ng-disabled="ctrl.disabled" style="width:180px" title="Choose a person">
+                        <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.text}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.CUSTOMER_TYPE | propsFilter: {id: $select.search, text: $select.search}">
+                            <div>{{item.text}}</div>
+                            <small>
+                                id: {{item.id}}
+                                text: <span>{{item.text}}</span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <p class="input-group">
+                        <small><strong>营业日期：</strong></small>
+                        <input type="text" class="form-inline" uib-datepicker-popup ng-model="dt" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="open()"/>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <small><strong>信用额度：</strong></small><input type="text" class="form-inline" placeholder="信用额度" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>已用额度：</strong></small><input type="text" class="form-inline" placeholder="已用额度" />
+                </div>
+
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>发票种类：</strong></small><!--<input type="text" class="form-inline" placeholder="发票种类" />-->
+                    <ui-select ng-model="$ctrl.item.selected" theme="select2" ng-disabled="ctrl.disabled" style="width:180px" title="Choose a person">
+                        <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.text}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.INVOICE_TYPE | propsFilter: {id: $select.search, text: $select.search}">
+                            <div>{{item.text}}</div>
+                            <small>
+                                id: {{item.id}}
+                                text: <span>{{item.text}}</span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-4">
+                    <small><strong>信用额度控制：</strong></small><input type="checkbox" ng-model="IS_CREDIT">
+                </div>
+                <div class="col-md-4">
+                    <small><strong>往来户：</strong></small><input type="text" class="form-inline" placeholder="往来户" />
+                </div>
+
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>寄售客户：</strong></small><input type="text" class="form-inline" placeholder="寄售客户" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>营业执照：</strong></small><input type="text" class="form-inline" placeholder="营业执照" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>经营许可证：</strong></small><input type="text" class="form-inline" placeholder="经营许可证" />
+                </div>
+
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>停业日期：</strong></small><input type="text" class="form-inline" placeholder="yyyy-mm-dd" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>最近交易日期：</strong></small><input type="text" class="form-inline" placeholder="" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>付款银行：</strong></small><input type="text" class="form-inline" placeholder="付款银行" />
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>税种：</strong></small><input type="text" class="form-inline" placeholder="税种" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>付款条件：</strong></small><input type="text" class="form-inline" placeholder="付款条件" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>注册地址：</strong></small><input type="text" class="form-inline" placeholder="注册地址" />
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>客户重要程度：</strong></small><input type="text" class="form-inline" placeholder="客户重要程度" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>发票地址：</strong></small><input type="text" class="form-inline" placeholder="发票地址" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>客户状态：</strong></small><input type="text" class="form-inline" placeholder="客户状态" />
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>行业：</strong></small><input type="text" class="form-inline" placeholder="客户重要程度" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>送货地址：</strong></small><input type="text" class="form-inline" placeholder="发票地址" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>联系人：</strong></small><input type="text" class="form-inline" placeholder="客户状态" />
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>电话座机：</strong></small><input type="text" class="form-inline" placeholder="客户重要程度" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>手机号码：</strong></small><input type="text" class="form-inline" placeholder="发票地址" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>销售组织：</strong></small><input type="text" class="form-inline" placeholder="客户状态" />
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>销售人员：</strong></small><input type="text" class="form-inline" placeholder="客户重要程度" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>销售手机号码：</strong></small><input type="text" class="form-inline" placeholder="发票地址" />
+                </div>
+                <div class="col-md-4">
+                    <small><strong>地区：</strong></small><input type="text" class="form-inline" placeholder="客户状态" />
+                </div>
+                <br/>
+                <br/>
+                <div class="col-md-4">
+                    <small><strong>渠道：</strong></small><input type="text" class="form-inline" placeholder="客户重要程度" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">保存</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">取消</button>
+</div>

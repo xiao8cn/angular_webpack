@@ -1,18 +1,17 @@
-require("angular");
 require("angular-ui-grid");
 require("angular-ui-router");
+require("ui-select");
 require("bootstrap");
+require("angular-ui-bootstrap");
+require("../common/angular-locale_zh-cn");
 
 let scmIndexHtml = require("../../html/scmIndex.html");
 
-import { tableComponent } from "../component/table.component";
 import { treeComponent } from "../component/tree.component";
+import { tableComponent } from "../component/table.component";
+import { customerAddComponent } from "../component/customerAdd.component";
 
-import { tableService } from "../service/table.service";
-
-let scm_web = angular.module("scm",['ui.grid', 'ui.grid.edit', 'ui.grid.cellNav','ui.router']);
-
-tableService(scm_web);
+let scm_web = angular.module("scm",['ui.bootstrap','ui.grid', 'ui.grid.edit', 'ui.grid.cellNav','ui.router','ui.grid.pagination','ui.select']);
 
 scm_web.config(function($stateProvider) {
     var states = [{
@@ -20,22 +19,19 @@ scm_web.config(function($stateProvider) {
         url: '/hello',
         component : 'tableComponent',
         resolve: {
-            source : function(){
-
+            option : function(){
                 let href = "https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json";
 
-                return href;
-
-            },
-            option : function(){
-                return {
-                    columnDefs : [
-                        { name: 'id', enableCellEdit: false },
-                        { name: 'age', enableCellEditOnFocus:false, displayName:'age (f2/dblClick edit)', width: 200  },
-                        { name: 'address.city', enableCellEdit: true, width: 300 },
-                        { name: 'name', displayName: 'Name (editOnFocus)', width: 200}
-                    ]
+                let option = {
+                    href : href,
+                    title:"test列表",
+                    gridOption : {
+                        paginationPageSizes: [10, 20, 30],
+                        paginationPageSize: 10,
+                    }
                 }
+
+                return option;
             }
         }
     },{
@@ -49,6 +45,7 @@ scm_web.config(function($stateProvider) {
 
                 let option = {
                     href : href,
+                    lang : "zh-cn",
                     title:"客户信息列表",
                     param : {
                         "RequestID":"9999",
@@ -68,6 +65,8 @@ scm_web.config(function($stateProvider) {
                         }
                     },
                     gridOption : {
+                        paginationPageSizes: [5, 10, 20],
+                        paginationPageSize: 5,
                         columnDefs : [
                             { name: 'GID', enableCellEdit: false, displayName:"编号", },
                             { name: 'AREA', enableCellEditOnFocus:false, displayName:'地区',   },
@@ -84,7 +83,7 @@ scm_web.config(function($stateProvider) {
                             { name: 'INVOICE_TYPE', displayName: '发票种类', },
                             { name: 'PUR_MAN_TEL', displayName: '销售手机号码', },
                         ]
-                    }
+                    },
                 }
 
                 return option;
@@ -98,8 +97,9 @@ scm_web.config(function($stateProvider) {
     });
 });
 
-treeComponent(scm_web);
-tableComponent(scm_web);
+treeComponent();
+tableComponent();
+customerAddComponent ();
 
 scm_web.component("scmComponent",{
     template : scmIndexHtml,
@@ -110,5 +110,3 @@ scm_web.component("scmComponent",{
 
     }
 });
-
-

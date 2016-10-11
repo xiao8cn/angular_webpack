@@ -13,6 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "angular": "^1.5.8",
+    "angular-i18n": "^1.5.8",
+    "angular-ui-bootstrap": "^2.1.4",
     "angular-ui-grid": "^3.2.9",
     "angular-ui-layout": "^1.4.2",
     "angular-ui-router": "^1.0.0-alpha.4",
@@ -27,6 +29,7 @@
     "jquery": "^3.1.1",
     "plugins": "^0.4.2",
     "style-loader": "^0.13.1",
+    "ui-select": "^0.19.4",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
   },
