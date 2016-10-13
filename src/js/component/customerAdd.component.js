@@ -1,6 +1,7 @@
 require("../../../static/css/select.css");
 
 import { contactCustComponent } from "../component/contactCust.component";
+import { CommonComponentBox } from "../common/global_val";
 
 export function customerAddComponent() {
 
@@ -130,24 +131,22 @@ export function customerAddComponent() {
                 opened: false
             }]
 
-            // CONTACT_CUST_NAME_CN
-
-            ctrl.openModal = () =>{
+            ctrl.openModal = val =>{
                 var modalInstance = $uibModal.open({
                     animation: true,
                     size : "lg",
-                    // appendTo: document.querySelector("table_modal"),
                     component: 'contactCustComponent',
-                    // windowClass:"addScmModal",
                     resolve: {
-
+                        option : function(){
+                            return CommonComponentBox[val];
+                        }
                     }
                 });
 
-                modalInstance.result.then(function (selectedItem) {
-                    $ctrl.selected = selectedItem;
+                modalInstance.result.then(selectedItem=>{
+                    $scope.myForm[val] = selectedItem.entity;
+                    console.log(selectedItem.entity);
                 }, function ($scope) {
-                    console.log($scope);
                     $log.info('modal-component dismissed at: ' + new Date());
                 });
             }

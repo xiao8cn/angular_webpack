@@ -20,6 +20,9 @@ export function contactCustComponent() {
                 this.searchCommonBox = (val,href,param,$scope)=>{
                     let oldWhere = param.DBRequest.Where,
                         where = oldWhere;
+
+                    console.log(val);
+
                     for (let key in val){
                         if(val[key]){
                             where +=` and ${key} like ${val[key]}`;
@@ -42,31 +45,32 @@ export function contactCustComponent() {
     angular.module("scm").component("contactCustComponent", {
         template : contactCustHtml,
         bindings : {
-            option : "<"
+            resolve : "<",
+            close: '&',
+            dismiss: '&'
         },
         controller: function ($scope,$log,$http,i18nService,scmAjaxService) {
 
+            console.log(this.resolve);
+
             let ctrl = this,
-                option = ctrl.option || {},
+                option = ctrl.resolve.option || {},
                 href = option.href,
                 lang = option.lang || "zh-cn",
-                gridOption = option.gridOption || {},
-                param = JSON.stringify(option.param);
+                gridOption = option.gridOptions || {},
+                param = option.param;
 
             i18nService.setCurrentLang(lang);
 
-            this.title = option.title || "往来户";
-            this.customer = {};
-
+            ctrl.title = option.title || "往来户";
+            ctrl.wheres = option.wheres || {};
+            ctrl.selectRow = {};
             $scope.gridOptions = gridOption;
-            $scope.gridOptions.enableCellEditOnFocus = true;
-            $scope.gridOptions.enableGridMenu = true;
-
-
-            $scope.gridOptions.paginationPageSizes = [5, 10, 20];
-            $scope.gridOptions.paginationPageSize = 5;
-            $scope.gridOptions.multiSelect = false;
-
+            $scope.gridOptions.enableCellEditOnFocus = gridOption.enableCellEditOnFocus || true;
+            $scope.gridOptions.enableGridMenu = gridOption.enableGridMenu || true;
+            $scope.gridOptions.paginationPageSizes = gridOption.paginationPageSizes || [5, 10, 20];
+            $scope.gridOptions.paginationPageSize = gridOption.paginationPageSize || 5;
+            $scope.gridOptions.multiSelect = gridOption.multiSelect || false;
             if(!gridOption.columnDefs){
                 $scope.gridOptions.columnDefs = [
                     { name: 'CUSTOMER_CODE', enableCellEdit: false,displayName:"客户编码" ,enableColumnMenu: false},
@@ -76,42 +80,34 @@ export function contactCustComponent() {
                     { name: 'CONTACTS', enableCellEdit: false,displayName:"联系人" ,enableColumnMenu: false},
                     { name: 'ADDRESS', enableCellEdit: false,displayName:"地址" ,enableColumnMenu: false},
                 ];
-            }
-
-            href = "http://10.99.2.61:8083/SCM/BusinessBase/Customer/getCustomer";
-            param = {
-                "RequestID":"9999",
-                "RequestFormat":"JSON",
-                "SessionKey":"e7ba24d2-8806-46bf-831c-ca1e9e8620fb",
-                "SessionTimeout":"60",
-                "Version":"1.0",
-                "DBRequest":{
-                    "Field":[
-                        "ALLFIELDS"
-                    ],
-                    "Where":"CUSTOMER_STATUS like 9 ",
-                    "Page":{
-                        "Start":"1",
-                        "End":"10"
-                    }
-                }
+            }else{
+                console.log(gridOption.columnDefs);
+                $scope.gridOptions.columnDefs = gridOption.columnDefs;
             }
 
             scmAjaxService.getAjaxJsonp(href,param)
                 .then(res=>{
                     $scope.gridOptions.data = res;
+                    this.search();
                 })
 
-            ctrl.search = (val) => scmAjaxService.searchCommonBox(val,href,param,$scope);
+            ctrl.search = () => {
+                let data = {};
+                option.wheres.forEach(res=>{
+                    data[res.name] = $("#"+res.name).val();
+                })
+                scmAjaxService.searchCommonBox(data,href,param,$scope)
+            };
 
             $scope.gridOptions.onRegisterApi = function(gridApi){
                 gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    console.log(123);
-                    var msg = 'row selected ' + row.isSelected;
-                    $log.log(msg);
+                    ctrl.selectRow = row;
                 });
             };
 
+            ctrl.save = ()=> {
+                ctrl.close({$value: ctrl.selectRow});
+            }
         }
     })
 }

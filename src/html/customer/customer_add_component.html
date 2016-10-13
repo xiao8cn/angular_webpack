@@ -131,7 +131,7 @@
                         <small><strong>往来户：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('ONTACT_CUST_NAME_CN')" class="form-control" name="CONTACT_CUST_NAME_CN" placeholder="信用额度" required ng-model="customer.CONTACT_CUST_NAME_CN"/>
+                        <input type="text" ng-click="$ctrl.openModal('CONTACT_CUST')" value="{{myForm.CONTACT_CUST.NAME_CN}}" class="form-control" name="CONTACT_CUST_NAME_CN" placeholder="信用额度"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.CONTACT_CUST_NAME_CN.$dirty && myForm.CONTACT_CUST_NAME_CN.$valid"></span>
                     </div>
@@ -209,7 +209,7 @@
                         <small><strong>付款条件：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="PAY_CON_NAME" placeholder="付款条件" required ng-model="customer.PAY_CON_NAME"/>
+                        <input type="text" ng-click="$ctrl.openModal('PAY_CON_NAME')" value="{{myForm.PAY_CON_NAME.PAY_CON_NAME}}" class="form-control" name="PAY_CON_NAME" placeholder="付款条件"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.PAY_CON_NAME.$dirty && myForm.PAY_CON_NAME.$valid"></span>
                     </div>
@@ -245,7 +245,7 @@
                         <small><strong>发票地址：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="INVOICE_ADDRESS1" placeholder="发票地址" required ng-model="customer.INVOICE_ADDRESS1"/>
+                        <input type="text" ng-click="$ctrl.openModal('INVOICE_ADDRESS1')" class="form-control" name="INVOICE_ADDRESS1" placeholder="发票地址" required ng-model="customer.INVOICE_ADDRESS1"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.INVOICE_ADDRESS1.$dirty && myForm.INVOICE_ADDRESS1.$valid"></span>
                     </div>

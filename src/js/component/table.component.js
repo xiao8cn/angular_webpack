@@ -54,7 +54,7 @@ export function tableComponent() {
                     $ctrl.selected = selectedItem;
                 }, function ($scope) {
                     console.log($scope);
-                    $log.info('modal-component dismissed at: ' + new Date());
+                    // $log.info('modal-component dismissed at: ' + new Date());
                 });
             }
 

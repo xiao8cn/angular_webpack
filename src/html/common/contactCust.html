@@ -4,16 +4,19 @@
     </div>
     <div class="panel-body">
 
-        <fieldset>
+        <fieldset ng-if="$ctrl.wheres">
             <legend>数据筛选</legend>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <span>客户编码:</span>
-                    <input ng-model="$ctrl.customer.CUSTOMER_CODE" type="text" class="form-control" placeholder="客户编码">
-                    <span>客户名称:</span>
-                    <input ng-model="$ctrl.customer.NAME_CN" type="text" class="form-control" placeholder="客户名称">
+            <form class="navbar-form row" role="search">
+                <div class="col-md-12 form-group">
+                    <div  class="col-md-4" ng-repeat="where in $ctrl.wheres">
+                        <span><small>{{where.name_cn}}</small></span>
+                        <input id="{{where.name}}" type="text" class="form-control" placeholder="{{where.name_cn}}">
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-default" ng-click="$ctrl.search($ctrl.customer)">查询</button>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-default" style="margin-top: 10px" ng-click="$ctrl.search()">查询</button>
+                </div>
             </form>
         </fieldset>
 
