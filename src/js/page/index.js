@@ -11,7 +11,7 @@ import { treeComponent } from "../component/tree.component";
 import { tableComponent } from "../component/table.component";
 import { customerAddComponent } from "../component/customerAdd.component";
 
-let scm_web = angular.module("scm",['ui.bootstrap','ui.grid', 'ui.grid.edit', 'ui.grid.cellNav','ui.router','ui.grid.pagination','ui.select']);
+let scm_web = angular.module("scm",['ui.bootstrap','ui.grid', 'ui.grid.edit', 'ui.grid.selection','ui.grid.cellNav','ui.router','ui.grid.pagination','ui.select']);
 
 scm_web.config(function($stateProvider) {
     var states = [{
@@ -106,7 +106,7 @@ scm_web.component("scmComponent",{
     styles: [],
     controller : function(){
 
-        this.message = "12445343"
+        this.message = "1412312321321"
 
     }
 });

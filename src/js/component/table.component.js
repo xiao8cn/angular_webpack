@@ -1,26 +1,29 @@
 export function tableComponent() {
     //然后 DataTables 这样初始化：
     angular.module("scm").component("tableComponent", {
-        template : `<div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{$ctrl.title}}</h3>
+        template : `
+                <div class="panel-group" id="tableComponent1">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#tableComponent1" href="#tableComponentOne">
+                            <h3 class="panel-title accordion-toggle">{{$ctrl.title}}</h3>
                           </div>
-                        <div class="panel-body">
-                            <div class="btn-group">
-                                <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'add'" ng-click="$ctrl.add()">增加</label>
-                                <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'modify'">修改</label>
-                                <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'delete'">删除</label>
+                        <div id="tableComponentOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="tableComponent1">
+                            <div class="panel-body">
+                                <div class="btn-group">
+                                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'add'" ng-click="$ctrl.add()">增加</label>
+                                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'modify'">修改</label>
+                                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'delete'">删除</label>
+                                </div>
+                                <div ui-grid="gridOptions" ui-grid-edit  ui-grid-pagination ui-grid-cellnav class="grid"></div>
                             </div>
-                            <div ui-grid="gridOptions" ui-grid-edit  ui-grid-pagination ui-grid-cellnav class="grid"></div>
                         </div>
-                        <div id="table_modal"></div>
                     </div>
-                    
+                </div>
                     `,
         bindings : {
             option : "<"
         },
-        controller: function ($scope,$http,i18nService,$uibModal) {
+        controller: function ($scope,$http,$log,i18nService,$uibModal) {
 
             let ctrl = this,
                 option = ctrl.option || {},
@@ -41,7 +44,7 @@ export function tableComponent() {
                     size : "lg",
                     // appendTo: document.querySelector("table_modal"),
                     component: 'customerAddComponent',
-                    windowClass:"{width:1200px}",
+                    windowClass:"addScmModal",
                     resolve: {
 
                     }
@@ -49,7 +52,8 @@ export function tableComponent() {
 
                 modalInstance.result.then(function (selectedItem) {
                     $ctrl.selected = selectedItem;
-                }, function () {
+                }, function ($scope) {
+                    console.log($scope);
                     $log.info('modal-component dismissed at: ' + new Date());
                 });
             }

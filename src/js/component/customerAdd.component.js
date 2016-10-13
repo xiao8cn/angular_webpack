@@ -1,6 +1,10 @@
 require("../../../static/css/select.css");
 
+import { contactCustComponent } from "../component/contactCust.component";
+
 export function customerAddComponent() {
+
+    contactCustComponent();
 
     angular.module("scm").filter('propsFilter', function() {
         return function(items, props) {
@@ -38,7 +42,7 @@ export function customerAddComponent() {
         templateUrl : "../../src/html/customer/customer_add_component.html",
         bindings : {
         },
-        controller: function($scope,$http) {
+        controller: function($scope,$http,$uibModal) {
 
             var ctrl = this,
                 param = {
@@ -53,6 +57,11 @@ export function customerAddComponent() {
                                 "UDF_CODE":[
                                     "CUSTOMER_TYPE",
                                     "INVOICE_TYPE",
+                                    "TAX_TYPE",
+                                    "IMPORTANCE_DEGREE",
+                                    "TRADE",
+                                    "AREA",
+                                    "CHANNEL"
                                 ]
                             },
                             "UDF_ID",
@@ -64,21 +73,28 @@ export function customerAddComponent() {
                         }
                     }
                 };
-
             $scope.customer={};
 
             param = JSON.stringify(param);
 
             $http.jsonp(`http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf?callback=JSON_CALLBACK&param=${param}`)
                 .success(res => {
-                    console.log(res.DBData);
+                    console.log(JSON.stringify(res.DBData.CUSTOMER_TYPE));
                     ctrl.CUSTOMER_TYPE = res.DBData.CUSTOMER_TYPE;
                     ctrl.INVOICE_TYPE = res.DBData.INVOICE_TYPE;
+                    ctrl.TAX_TYPE = res.DBData.TAX_TYPE;
+                    ctrl.IMPORTANCE_DEGREE = res.DBData.IMPORTANCE_DEGREE;
+                    ctrl.TRADE = res.DBData.TRADE;
+                    ctrl.AREA = res.DBData.AREA;
+                    ctrl.CHANNEL = res.DBData.CHANNEL;
                 })
+
+            ctrl.CUSTOMER_STATUS = [{"id":"1", "text":"启用"}, {"id":"2", "text":"禁用"}];
 
             $scope.today = function() {
                 $scope.dt = new Date();
             };
+
             $scope.today();
 
             $scope.clear = function() {
@@ -97,18 +113,44 @@ export function customerAddComponent() {
                 startingDay: 1
             };
 
-            $scope.open = function() {
-                $scope.popup.opened = true;
-                console.log($scope.customer);
+            $scope.open = function(val) {
+                console.log($scope.myForm);
+                $scope.popup[val].opened = true;
             };
 
             $scope.setDate = function(year, month, day) {
                 $scope.dt = new Date(year, month, day);
             };
 
-            $scope.popup = {
+            $scope.popup = [{
                 opened: false
-            };
+            },{
+                opened: false
+            },{
+                opened: false
+            }]
+
+            // CONTACT_CUST_NAME_CN
+
+            ctrl.openModal = () =>{
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    size : "lg",
+                    // appendTo: document.querySelector("table_modal"),
+                    component: 'contactCustComponent',
+                    // windowClass:"addScmModal",
+                    resolve: {
+
+                    }
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $ctrl.selected = selectedItem;
+                }, function ($scope) {
+                    console.log($scope);
+                    $log.info('modal-component dismissed at: ' + new Date());
+                });
+            }
 
 
         }

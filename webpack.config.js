@@ -18,6 +18,7 @@ module.exports = {
     },
     devServer: {
         hot: true
+
     },
     //入口文件输出配置
     /**
