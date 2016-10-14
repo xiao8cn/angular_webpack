@@ -21,8 +21,6 @@ export function contactCustComponent() {
                     let oldWhere = param.DBRequest.Where,
                         where = oldWhere;
 
-                    console.log(val);
-
                     for (let key in val){
                         if(val[key]){
                             where +=` and ${key} like ${val[key]}`;
@@ -51,14 +49,23 @@ export function contactCustComponent() {
         },
         controller: function ($scope,$log,$http,i18nService,scmAjaxService) {
 
-            console.log(this.resolve);
-
             let ctrl = this,
                 option = ctrl.resolve.option || {},
                 href = option.href,
                 lang = option.lang || "zh-cn",
                 gridOption = option.gridOptions || {},
                 param = option.param;
+
+            $scope.select = {};
+            $scope.textdata = {};
+
+            ctrl.$onInit = function(){
+                console.log("init");
+            }
+
+            $scope.look = function(event){
+                console.log(event.select);
+            }
 
             i18nService.setCurrentLang(lang);
 
@@ -93,21 +100,39 @@ export function contactCustComponent() {
 
             ctrl.search = () => {
                 let data = {};
-                option.wheres.forEach(res=>{
-                    data[res.name] = $("#"+res.name).val();
-                })
+
+                for(let key in $scope.textdata){
+                    data[key] = $scope.textdata[key];
+                }
+                for(let key in $scope.select){
+                    if($scope.select[key]){
+                        data[key] = $scope.select[key].id;
+                    }
+                }
+
+                console.log(data);
                 scmAjaxService.searchCommonBox(data,href,param,$scope)
             };
 
             $scope.gridOptions.onRegisterApi = function(gridApi){
                 gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    ctrl.selectRow = row;
+                    if(row.isSelected){
+                        ctrl.selectRow = row;
+                    }else{
+                        ctrl.selectRow = {};
+                    }
                 });
             };
 
             ctrl.save = ()=> {
+                console.log(ctrl.selectRow);
                 ctrl.close({$value: ctrl.selectRow});
             }
+
+            ctrl.cancel = ()=>{
+                ctrl.dismiss({$value: 'cancel'});
+            }
+
         }
     })
 }

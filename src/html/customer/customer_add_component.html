@@ -131,9 +131,8 @@
                         <small><strong>往来户：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('CONTACT_CUST')" value="{{myForm.CONTACT_CUST.NAME_CN}}" class="form-control" name="CONTACT_CUST_NAME_CN" placeholder="信用额度"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.CONTACT_CUST_NAME_CN.$dirty && myForm.CONTACT_CUST_NAME_CN.$valid"></span>
+                        <input type="text" ng-click="$ctrl.openModal('CONTACT_CUST')" value="{{myForm.CONTACT_CUST.NAME_CN}}" class="form-control" name="CONTACT_CUST_NAME_CN" placeholder="请选择"/>
+                        <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
 
@@ -209,9 +208,8 @@
                         <small><strong>付款条件：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('PAY_CON_NAME')" value="{{myForm.PAY_CON_NAME.PAY_CON_NAME}}" class="form-control" name="PAY_CON_NAME" placeholder="付款条件"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.PAY_CON_NAME.$dirty && myForm.PAY_CON_NAME.$valid"></span>
+                        <input type="text" ng-click="$ctrl.openModal('PAY_CON_NAME')" value="{{myForm.PAY_CON_NAME.PAY_CON_NAME}}" class="form-control" name="PAY_CON_NAME" placeholder="请选择"/>
+                        <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
 
@@ -245,9 +243,8 @@
                         <small><strong>发票地址：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('INVOICE_ADDRESS1')" class="form-control" name="INVOICE_ADDRESS1" placeholder="发票地址" required ng-model="customer.INVOICE_ADDRESS1"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.INVOICE_ADDRESS1.$dirty && myForm.INVOICE_ADDRESS1.$valid"></span>
+                        <input type="text" ng-click="$ctrl.openModal('INVOICE_ADDRESS1')" value="{{myForm.INVOICE_ADDRESS1.ADDRESS1}}" class="form-control" name="INVOICE_ADDRESS1" placeholder="请选择"/>
+                        <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>客户状态：</strong></small>
@@ -290,9 +287,8 @@
                         <small><strong>送货地址：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="SEND_ADDRESS1" placeholder="送货地址" required ng-model="customer.SEND_ADDRESS1"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.SEND_ADDRESS1.$dirty && myForm.SEND_ADDRESS1.$valid"></span>
+                        <input type="text" class="form-control" ng-click="$ctrl.openModal('SEND_ADDRESS1')" value="{{myForm.SEND_ADDRESS1.ADDRESS1}}" name="SEND_ADDRESS1" placeholder="请选择"/>
+                        <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
 
@@ -328,9 +324,8 @@
                         <small><strong>销售组织：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="ORG_NAME" placeholder="销售组织" required ng-model="customer.ORG_NAME"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.ORG_NAME.$dirty && myForm.ORG_NAME.$valid"></span>
+                        <input type="text" ng-click="$ctrl.openModal('ORG_NAME')" value="{{myForm.ORG_NAME.ORG_NAME}}" class="form-control" name="ORG_NAME" placeholder="请选择"/>
+                        <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
 
@@ -339,9 +334,8 @@
                         <small><strong>销售人员：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="SALES_NAME_CN" placeholder="销售人员" required ng-model="customer.SALES_NAME_CN"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.SALES_NAME_CN.$dirty && myForm.SALES_NAME_CN.$valid"></span>
+                        <input type="text" class="form-control" ng-click="$ctrl.openModal('SALES_NAME_CN')" value="{{myForm.SALES_NAME_CN.NAME_CN}}" name="SALES_NAME_CN" placeholder="销售人员"/>
+                        <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>销售手机号码：</strong></small>
