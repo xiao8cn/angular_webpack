@@ -10,7 +10,10 @@
                 <div class="col-md-12 form-group">
                     <div  class="col-md-4" ng-repeat="where in $ctrl.wheres">
                         <div>
+                            <span><small>{{where.name_cn}}</small></span>
                         </div>
+                        <input  style="min-width:180px;" ng-if="where.type == 'text'" ng-model="textdata[where.name]" type="text" class="form-control" placeholder="{{where.name_cn}}">
+                        <select style="min-width:180px;" ng-if="where.type == 'select'" ng-click="look(this)" ng-model="select[where.name]" class="form-control" value="" ng-options="item as item.text for item in where.selectValue track by item.id"><option></option></select>
                     </div>
                 </div>
 
