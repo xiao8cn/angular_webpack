@@ -53,6 +53,7 @@ const tableComponent = {
         }
 
         if(param){
+            console.log(param);
             $http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`)
                 .success(res => {
                     $scope.gridOptions.data = res.DBData;
