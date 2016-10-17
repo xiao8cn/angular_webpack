@@ -14,7 +14,7 @@ module.exports = {
     ],
     //页面入口文件配置web[
     entry: {
-        index : ['webpack/hot/dev-server','./src/js/page/index.js']
+        index : ['webpack/hot/dev-server','./src/js/main/index.js']
     },
     devServer: {
         hot: true
@@ -25,8 +25,8 @@ module.exports = {
      * @param publicPath js路径,path 路径配置,filename --hot 模式下需要 bundle.js
      */
     output: {
-        publicPath: "http://127.0.0.1:8080/dist/js/page",
-        path: path.resolve(__dirname, "dist/js/page"),
+        publicPath: "http://127.0.0.1:8080/dist/js/main",
+        path: path.resolve(__dirname, "dist/js/main"),
         filename: "bundle.js",
         // filename : "[name].js"
     },
@@ -63,11 +63,11 @@ module.exports = {
     ],
     //页面入口文件配置web[
     entry: {
-        index : ['./src/js/page/index.js']
+        index : ['./src/js/main/index.js']
     },
     //入口文件输出配置
     output: {
-        path: path.resolve(__dirname, "dist/js/page"),
+        path: path.resolve(__dirname, "dist/js/main"),
         filename : "[name].js"
     },
     module: {

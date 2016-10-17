@@ -1,28 +1,31 @@
-require("angular-ui-grid");
-require("angular-ui-router");
 require("ui-select");
 require("bootstrap");
+require("angular-ui-grid");
 require("angular-ui-bootstrap");
+require("angular-ui-router");
 require("../common/angular-locale_zh-cn");
 
-let scmIndexHtml = require("../../html/scmIndex.html");
+import indexComponent from "./index.component";
 
-import { treeComponent } from "../component/tree.component";
-import { tableComponent } from "../component/table.component";
-import { customerAddComponent } from "../component/customerAdd.component";
+import ComponentsModule from "../components/components";
 
-let scm_web = angular.module("scm",['ui.bootstrap','ui.grid', 'ui.grid.edit', 'ui.grid.selection','ui.grid.cellNav','ui.router','ui.grid.pagination','ui.select']);
+let scm_web = angular.module("scm",[
+    ComponentsModule.name,
+    'ui.router',
+    'ui.bootstrap',
+    'ui.router',
+    'ui.select',
+]).component('app',indexComponent);
 
 scm_web.config(function($stateProvider) {
     var states = [{
         name: 'hello',
         url: '/hello',
-        component : 'tableComponent',
+        component : 'scmTable',
         resolve: {
             option : function(){
-                let href = "https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json";
-
-                let option = {
+                let href = "https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json",
+                    option = {
                     href : href,
                     title:"test列表",
                     gridOption : {
@@ -37,13 +40,12 @@ scm_web.config(function($stateProvider) {
     },{
         name: 'getCustomer',
         url: '/getCustomer',
-        component : 'tableComponent',
+        component : 'scmTable',
         resolve: {
             option : function(){
 
-                let href = "http://10.99.2.61:8083/SCM/CRM/CUSTOMER/getCustomer";
-
-                let option = {
+                let href = "http://10.99.2.61:8083/SCM/CRM/CUSTOMER/getCustomer",
+                    option = {
                     href : href,
                     lang : "zh-cn",
                     title:"客户信息列表",
@@ -85,9 +87,7 @@ scm_web.config(function($stateProvider) {
                         ]
                     },
                 }
-
                 return option;
-
             },
         }
     }]
@@ -97,16 +97,69 @@ scm_web.config(function($stateProvider) {
     });
 });
 
-treeComponent();
-tableComponent();
-customerAddComponent ();
+scm_web.filter('propsFilter', function() {
+    return function(items, props) {
+        var out = [];
+        if (angular.isArray(items)) {
+            var keys = Object.keys(props);
 
-scm_web.component("scmComponent",{
-    template : scmIndexHtml,
-    styles: [],
-    controller : function(){
+            items.forEach(function(item) {
+                var itemMatches = false;
 
-        this.message = "1412312321321"
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
 
-    }
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+
+        return out;
+    };
+});
+
+scm_web.service("scmAjaxService",function($http){
+    var serviceInstance = function(){
+        this.getAjaxJsonp = (href,param) =>{
+            return new Promise((resolve,reject) => {
+                param = JSON.stringify(param);
+                $http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`)
+                    .success(res => {
+                        resolve(res.DBData);
+                    })
+                    .error((res,status)=>{
+                        reject(res,status)
+                    })
+            });
+        };
+        this.searchCommonBox = (val,href,param,$scope)=>{
+            let oldWhere = param.DBRequest.Where,
+                where = oldWhere;
+
+            for (let key in val){
+                if(val[key]){
+                    where +=` and ${key} like ${val[key]}`;
+                }
+            }
+            param.DBRequest.Where = where;
+            this.getAjaxJsonp(href,param)
+                .then(res=>{
+                    $scope.$apply(function () {
+                        $scope.gridOptions.data = res || [];
+                        param.DBRequest.Where = oldWhere;
+                    });
+                })
+        }
+    };
+    return new serviceInstance();
 });

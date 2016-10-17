@@ -1,0 +1,246 @@
+﻿[
+  {
+    "id": "Home",
+    "text": "首页",
+    "iconCls": "icon-home"
+  },
+  {
+    "id": "CRM",
+    "text": "CRM",
+    "iconCls": "icon-crm",
+    "state": "open",
+    "children": [
+      {
+        "id": "CRM001",
+        "text": "客户信息管理"
+      },
+      {
+        "id": "CRM003",
+        "text": "客户联系人管理"
+      },
+      {
+        "id": "CRM004",
+        "text": "销售合同管理"
+      },
+      {
+        "id": "CRM005",
+        "text": "销售报价管理"
+      }
+    ]
+  },
+  {
+    "id": "SAL",
+    "text": "销售管理",
+    "iconCls": "icon-sales",
+    "state": "closed",
+    "children": [
+      {
+        "id": "SAL002",
+        "text": "销售订单管理"
+      },
+      {
+        "id": "SAL005",
+        "text": "销售发货管理"
+      },
+      {
+        "id": "SAL011",
+        "text": "销售退货管理"
+      }
+    ]
+  },
+  {
+    "id": "SRM",
+    "text": "SRM",
+    "iconCls": "icon-srm",
+    "state": "closed",
+    "children": [
+      {
+        "id": "SRM002",
+        "text": "潜在供应商管理"
+      },
+      {
+        "id": "SRM003",
+        "text": "正式供应商管理"
+      },
+      {
+        "id": "SRM004",
+        "text": "货源管理"
+      },
+      {
+        "id": "SRM005",
+        "text": "采购合同管理"
+      },
+      {
+        "id": "SRM011",
+        "text": "供应商图形页面"
+      },
+      {
+        "id": "SRM022",
+        "text": "供应商交货分析报表"
+      }
+    ]
+  },
+  {
+    "id": "PUR",
+    "text": "采购管理",
+    "iconCls": "icon-purchasing",
+    "state": "closed",
+    "children": [
+      {
+        "id": "PUR002",
+        "text": "采购订单管理"
+      },
+      {
+        "id": "PUR003",
+        "text": "采购收货管理"
+      },
+      {
+        "id": "PUR004",
+        "text": "采购询价管理"
+      },
+      {
+        "id": "PUR005",
+        "text": "采购申请管理"
+      },
+      {
+        "id": "PUR007",
+        "text": "采购退货管理"
+      },
+      {
+        "id": "PUR008",
+        "text": "采购订单图形页面"
+      },
+      {
+        "id": "PUR009",
+        "text": "采购订单明细跟踪报表"
+      }
+    ]
+  },
+  {
+    "id": "PRO",
+    "text": "产品管理",
+    "iconCls": "icon-products",
+    "state": "closed",
+    "children": [
+      {
+        "id": "PRO002",
+        "text": "客户产品信息"
+      },
+      {
+        "id": "PRO003",
+        "text": "商品信息管理"
+      },
+      {
+        "id": "PRO004",
+        "text": "BOM管理"
+      },
+      {
+        "id": "PRO005",
+        "text": "单位换算管理"
+      },
+      {
+        "id": "PRO006",
+        "text": "产品发布管理"
+      },
+      {
+        "id": "PRO007",
+        "text": "物料管理"
+      }
+    ]
+  },
+  {
+    "id": "MOC",
+    "text": "产能协同",
+    "iconCls": "icon-capacity",
+    "state": "closed",
+    "children": [
+      {
+        "id": "MOC003",
+        "text": "生产领料单管理"
+      },
+      {
+        "id": "MOC004",
+        "text": "生产入库单管理"
+      },
+      {
+        "id": "MOC005",
+        "text": "生产计划管理"
+      },
+      {
+        "id": "SCH6200",
+        "text": "工单维护页面"
+      }
+    ]
+  },
+  {
+  "id": "WAR",
+  "text": "库存管理",
+  "iconCls": "icon-inv",
+  "state": "closed",
+  "children": [{
+      "id": "WAR001",
+      "text": "即时库存管理"
+    },{
+      "id": "WAR002",
+      "text": "其他入库管理"
+    },{
+      "id": "WAR003",
+      "text": "其它出库管理"
+    },{
+      "id": "WAR004",
+      "text": "库存调整"
+    }, {
+      "id": "WAR005",
+      "text": "盘点任务管理"
+    },{
+      "id": "WAR006",
+      "text": "库存初始化"
+    },{
+      "id": "WAR007",
+      "text": "统计分析",
+      "state":"closed",
+      "children":[{
+        "id":"WAR00701",
+        "text":"收货汇总表"
+      },{
+        "id":"WAR00702",
+        "text":"发货汇总表"
+      },{
+        "id":"WAR00703",
+        "text":"库龄分析表"
+      },{
+        "id":"WAR00704",
+        "text":"保质期分析"
+      },{
+        "id":"WAR00705",
+        "text":"库位使用率"
+      }]
+    }]
+
+},
+  {
+    "id": "SC",
+    "text": "供应商协同",
+    "iconCls": "icon-supply",
+    "state": "closed",
+    "children": [
+      {
+        "id": "SC004",
+        "text": "采购报价单"
+      }
+    ]
+  },
+  {
+    "id": "LOT",
+    "text": "批次管理",
+    "iconCls": "icon-batch",
+    "state": "closed",
+    "children": [
+      {
+        "id": "LOT005",
+        "text": "发货产品批次查询"
+      }
+    ]
+  }
+]
+

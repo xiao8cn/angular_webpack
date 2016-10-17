@@ -1,0 +1,17 @@
+<div class="panel-group" id="tableComponent1">
+    <div class="panel panel-info">
+        <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#tableComponent1" href="#tableComponentOne">
+            <h3 class="panel-title accordion-toggle">{{$ctrl.title}}</h3>
+        </div>
+        <div id="tableComponentOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="tableComponent1">
+            <div class="panel-body">
+                <div class="btn-group">
+                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'add'" ng-click="$ctrl.add()">增加</label>
+                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'modify'">修改</label>
+                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'delete'">删除</label>
+                </div>
+                <div ui-grid="gridOptions" ui-grid-edit  ui-grid-pagination ui-grid-cellnav class="grid"></div>
+            </div>
+        </div>
+    </div>
+</div>
