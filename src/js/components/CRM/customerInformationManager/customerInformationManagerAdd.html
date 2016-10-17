@@ -35,16 +35,27 @@
                     <div class="col-md-2">
                         <small><strong>英文名称：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="NAME_EN" placeholder="英文名称" required ng-model="customer.NAME_EN"/>
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.NAME_EN.$invalid}">
+                        <input type="text" class="form-control" name="NAME_EN" placeholder="英文名称" required ng-model="customer.NAME_EN"
+                               uib-tooltip="必输"
+                               tooltip-placement="left"
+                               tooltip-trigger="'mouseenter'"
+                               tooltip-enable="!inputModel"
+                        />
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.NAME_EN.$dirty && myForm.NAME_EN.$valid"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>法人姓名：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="LEGAL_PERSON" ng-model="customer.LEGAL_PERSON" placeholder="法人姓名" required/>
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.LEGAL_PERSON.$invalid}">
+                        <input type="text" class="form-control" name="LEGAL_PERSON" ng-model="customer.LEGAL_PERSON" placeholder="法人姓名"
+                               required
+                               uib-tooltip="必输"
+                               tooltip-placement="left"
+                               tooltip-trigger="'mouseenter'"
+                               tooltip-enable="!inputModel"
+                        />
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.LEGAL_PERSON.$dirty && myForm.LEGAL_PERSON.$valid"></span>
                     </div>
@@ -55,15 +66,15 @@
                         <small><strong>税号：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="TAX" placeholder="税号" required ng-model="customer.TAX"/>
+                        <input type="text" class="form-control" name="TAX" placeholder="税号" ng-model="customer.TAX"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.TAX.$dirty && myForm.TAX.$valid"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>企业类型：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <ui-select  ng-model="customer.CUSTOMER_TYPE" name="CUSTOMER_TYPE" theme="select2" style="min-width: 200px;" title="Choose a person">
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.CUSTOMER_TYPE.$invalid}">
+                        <ui-select ng-model="customer.CUSTOMER_TYPE" name="CUSTOMER_TYPE" theme="select2" style="min-width: 200px;" title="Choose a person" required="true">
                             <ui-select-match placeholder="请选择">{{$select.selected.text}}</ui-select-match>
                             <ui-select-choices repeat="cust in $ctrl.CUSTOMER_TYPE | propsFilter: {id: $select.search, text: $select.search}">
                                 <div>{{cust.text}}</div>
@@ -81,16 +92,14 @@
                         <small><strong>营业日期：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" uib-datepicker-popup name="BUSINESS_DATE" ng-model="customer.BUSINESS_DATE" is-open="popup[0].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="open(0)"/>
+                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" uib-datepicker-popup name="BUSINESS_DATE" ng-model="customer.BUSINESS_DATE" is-open="popup[0].opened" datepicker-options="dateOptions" close-text="Close" ng-click="open(0)"/>
                         <span class="glyphicon glyphicon-calendar form-control-feedback" style="padding-right:20px"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>信用额度：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="CREDIT_LIMIT" placeholder="信用额度" required ng-model="customer.CREDIT_LIMIT"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.CREDIT_LIMIT.$dirty && myForm.CREDIT_LIMIT.$valid"></span>
+                        <input type="text" class="form-control" name="CREDIT_LIMIT" placeholder="信用额度" ng-model="customer.CREDIT_LIMIT"/>
                     </div>
                 </div>
 
@@ -99,9 +108,7 @@
                         <small><strong>已用额度：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="CREDIT" placeholder="信用额度" required ng-model="customer.CREDIT"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.CREDIT.$dirty && myForm.CREDIT.$valid"></span>
+                        <input type="text" class="form-control" name="CREDIT" placeholder="已用额度" ng-model="customer.CREDIT"/>
                     </div>
                     <div class="col-md-2">
                         <small><strong>发票种类：</strong></small>
@@ -131,7 +138,7 @@
                         <small><strong>往来户：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('CONTACT_CUST')" value="{{myForm.CONTACT_CUST.NAME_CN}}" class="form-control" name="CONTACT_CUST_NAME_CN" placeholder="请选择"/>
+                        <input type="text" ng-click="$ctrl.openModal('CONTACT_CUST')"  ng-model="myForm.CONTACT_CUST.NAME_CN" value="{{myForm.CONTACT_CUST.NAME_CN}}" class="form-control" name="CONTACT_CUST_NAME_CN" placeholder="请选择"/>
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
@@ -141,15 +148,13 @@
                         <small><strong>寄售客户：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="checkbox" name="IS_CONSIGN" placeholder="寄售客户" required ng-model="customer.IS_CONSIGN"/>
+                        <input type="checkbox" name="IS_CONSIGN" placeholder="寄售客户" ng-model="customer.IS_CONSIGN"/>
                     </div>
                     <div class="col-md-2">
                         <small><strong>营业执照：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="BUSINESS_LICENCE" placeholder="营业执照" required ng-model="customer.BUSINESS_LICENCE"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.BUSINESS_LICENCE.$dirty && myForm.BUSINESS_LICENCE.$valid"></span>
+                        <input type="text" class="form-control" name="BUSINESS_LICENCE" placeholder="营业执照" ng-model="customer.BUSINESS_LICENCE"/>
                     </div>
                 </div>
 
@@ -158,15 +163,13 @@
                         <small><strong>经营许可证：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="PERMIT" placeholder="经营许可证" required ng-model="customer.PERMIT"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.PERMIT.$dirty && myForm.PERMIT.$valid"></span>
+                        <input type="text" class="form-control" name="PERMIT" placeholder="经营许可证" ng-model="customer.PERMIT"/>
                     </div>
                     <div class="col-md-2">
                         <small><strong>停业日期：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" uib-datepicker-popup name="END_DATE" ng-model="customer.END_DATE" is-open="popup[1].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="open(1)"/>
+                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" uib-datepicker-popup name="END_DATE" ng-model="customer.END_DATE" is-open="popup[1].opened" datepicker-options="dateOptions" close-text="Close" ng-click="open(1)"/>
                         <span class="glyphicon glyphicon-calendar form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
@@ -176,14 +179,14 @@
                         <small><strong>最近交易日期：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" uib-datepicker-popup name="RECENCY_DATE" ng-model="customer.RECENCY_DATE" is-open="popup[2].opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-click="open(2)"/>
+                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" uib-datepicker-popup name="RECENCY_DATE" ng-model="customer.RECENCY_DATE" is-open="popup[2].opened" datepicker-options="dateOptions" close-text="Close" ng-click="open(2)"/>
                         <span class="glyphicon glyphicon-calendar form-control-feedback" style="padding-right:20px"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>付款银行：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="BANK" placeholder="付款银行" required ng-model="customer.BANK"/>
+                        <input type="text" class="form-control" name="BANK" placeholder="付款银行" ng-model="customer.BANK"/>
                         <span class="glyphicon glyphicon-euro form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
@@ -208,7 +211,7 @@
                         <small><strong>付款条件：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('PAY_CON_NAME')" value="{{myForm.PAY_CON_NAME.PAY_CON_NAME}}" class="form-control" name="PAY_CON_NAME" placeholder="请选择"/>
+                        <input type="text" ng-click="$ctrl.openModal('PAY_CON_NAME')" ng-model="myForm.PAY_CON_NAME.PAY_CON_NAME" value="{{myForm.PAY_CON_NAME.PAY_CON_NAME}}" class="form-control" name="PAY_CON_NAME" placeholder="请选择"/>
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
@@ -218,7 +221,7 @@
                         <small><strong>注册地址：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="ADDRESS" placeholder="注册地址" required ng-model="customer.ADDRESS"/>
+                        <input type="text" class="form-control" name="ADDRESS" placeholder="注册地址" ng-model="customer.ADDRESS"/>
                         <span class="glyphicon glyphicon-home form-control-feedback" style="padding-right:20px"></span>
                     </div>
                     <div class="col-md-2">
@@ -243,17 +246,13 @@
                         <small><strong>发票地址：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('INVOICE_ADDRESS1')" value="{{myForm.INVOICE_ADDRESS1.ADDRESS1}}" class="form-control" name="INVOICE_ADDRESS1" placeholder="请选择"/>
+                        <input type="text" ng-click="$ctrl.openModal('INVOICE_ADDRESS1')" ng-model="myForm.INVOICE_ADDRESS1.ADDRESS1" value="{{myForm.INVOICE_ADDRESS1.ADDRESS1}}" class="form-control" name="INVOICE_ADDRESS1" placeholder="请选择"/>
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>客户状态：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <!--<input type="text" class="form-control" name="CUSTOMER_STATUS" placeholder="客户状态" required ng-model="customer.CUSTOMER_STATUS"/>
-                        <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
-                              ng-show="myForm.CUSTOMER_STATUS.$dirty && myForm.CUSTOMER_STATUS.$valid"></span>-->
-
                         <ui-select ng-model="customer.CUSTOMER_STATUS" name="CUSTOMER_STATUS" theme="select2" style="min-width:200px" title="Choose a person">
                             <ui-select-match placeholder="请选择">{{$select.selected.text}}</ui-select-match>
                             <ui-select-choices repeat="customer in $ctrl.CUSTOMER_STATUS | propsFilter: {id: $select.search, text: $select.search}">
@@ -287,7 +286,7 @@
                         <small><strong>送货地址：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-click="$ctrl.openModal('SEND_ADDRESS1')" value="{{myForm.SEND_ADDRESS1.ADDRESS1}}" name="SEND_ADDRESS1" placeholder="请选择"/>
+                        <input type="text" class="form-control" ng-click="$ctrl.openModal('SEND_ADDRESS1')" ng-model="myForm.SEND_ADDRESS1.ADDRESS1" value="{{myForm.SEND_ADDRESS1.ADDRESS1}}" name="SEND_ADDRESS1" placeholder="请选择"/>
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
@@ -296,16 +295,26 @@
                     <div class="col-md-2">
                         <small><strong>联系人：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="CONTACTS" placeholder="联系人" required ng-model="customer.CONTACTS"/>
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.CONTACTS.$invalid}">
+                        <input type="text" class="form-control" name="CONTACTS" placeholder="联系人" required ng-model="customer.CONTACTS"
+                               uib-tooltip="必输"
+                               tooltip-placement="left"
+                               tooltip-trigger="'mouseenter'"
+                               tooltip-enable="!inputModel"
+                        />
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.CONTACTS.$dirty && myForm.CONTACTS.$valid"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>电话座机：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="TEL" placeholder="电话座机" required ng-model="customer.TEL"/>
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.TEL.$invalid}">
+                        <input type="text" class="form-control" name="TEL" placeholder="电话座机" required ng-model="customer.TEL"
+                               uib-tooltip="必输"
+                               tooltip-placement="left"
+                               tooltip-trigger="'mouseenter'"
+                               tooltip-enable="!inputModel"
+                        />
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.TEL.$dirty && myForm.TEL.$valid"></span>
                     </div>
@@ -315,16 +324,27 @@
                     <div class="col-md-2">
                         <small><strong>手机号码：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="MOBILE" placeholder="手机号码" required ng-model="customer.MOBILE"/>
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.MOBILE.$invalid}">
+                        <input type="text" class="form-control" name="MOBILE" placeholder="手机号码" required ng-model="customer.MOBILE"
+                               uib-tooltip="必输"
+                               tooltip-placement="left"
+                               tooltip-trigger="'mouseenter'"
+                               tooltip-enable="!inputModel"
+                        />
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.MOBILE.$dirty && myForm.MOBILE.$valid"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>销售组织：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" ng-click="$ctrl.openModal('ORG_NAME')" value="{{myForm.ORG_NAME.ORG_NAME}}" class="form-control" name="ORG_NAME" placeholder="请选择"/>
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.ORG_NAME.$invalid}">
+                        <input type="text" ng-click="$ctrl.openModal('ORG_NAME')" ng-model="myForm.ORG_NAME.ORG_NAME" value="{{myForm.ORG_NAME.ORG_NAME}}" class="form-control" name="ORG_NAME" placeholder="请选择"
+                               required
+                               uib-tooltip="必输"
+                               tooltip-placement="left"
+                               tooltip-trigger="'mouseenter'"
+                               tooltip-enable="!inputModel"
+                        />
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                 </div>
@@ -333,15 +353,21 @@
                     <div class="col-md-2">
                         <small><strong>销售人员：</strong></small>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" ng-click="$ctrl.openModal('SALES_NAME_CN')" value="{{myForm.SALES_NAME_CN.NAME_CN}}" name="SALES_NAME_CN" placeholder="销售人员"/>
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.SALES_NAME_CN.$invalid}">
+                        <input type="text" ng-click="$ctrl.openModal('SALES_NAME_CN')" ng-model="myForm.SALES_NAME_CN.NAME_CN" value="{{myForm.SALES_NAME_CN.NAME_CN}}" class="form-control" name="SALES_NAME_CN" placeholder="销售人员"
+                               required
+                               uib-tooltip="必输"
+                               tooltip-placement="left"
+                               tooltip-trigger="'mouseenter'"
+                               tooltip-enable="!inputModel"
+                        />
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
                     <div class="col-md-2">
                         <small><strong>销售手机号码：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" name="PUR_MAN_TEL" placeholder="销售手机号码" required ng-model="customer.PUR_MAN_TEL"/>
+                        <input type="text" class="form-control" name="PUR_MAN_TEL" placeholder="销售手机号码" ng-model="customer.PUR_MAN_TEL"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.PUR_MAN_TEL.$dirty && myForm.PUR_MAN_TEL.$valid"></span>
                     </div>
@@ -383,7 +409,6 @@
             </div>
         </form>
     </div>
-
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">保存</button>

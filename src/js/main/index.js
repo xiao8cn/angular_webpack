@@ -27,7 +27,7 @@ scm_web.config(function($stateProvider) {
                 let href = "https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json",
                     option = {
                     href : href,
-                    title:"test列表",
+                    title:"test列表a",
                     gridOption : {
                         paginationPageSizes: [10, 20, 30],
                         paginationPageSize: 10,

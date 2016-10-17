@@ -1,7 +1,7 @@
 let webpack = require('webpack'),
     path = require("path"),
     commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js'),
-    jqueryPlugin = new webpack.ProvidePlugin({$:"jquery",jQuery:"jquery","window.jQuery":"jquery"}),
+    // jqueryPlugin = new webpack.ProvidePlugin({$:"jquery",jQuery:"jquery","window.jQuery":"jquery"}),
     hotPlugin = new webpack.HotModuleReplacementPlugin();
 
 // 热模式 webpack-dev-server --hot --quiet
@@ -9,7 +9,7 @@ module.exports = {
     //插件项
     plugins: [
         // commonsPlugin,
-        jqueryPlugin,
+        // jqueryPlugin,
         hotPlugin
     ],
     //页面入口文件配置web[
@@ -33,7 +33,7 @@ module.exports = {
     module: {
         //加载器配置
         loaders: [
-            { test: /\.js$/,exclude:/(node_modules|bower_components|jquery.easyui.min.js)/,loader : 'babel',query : {presets:["es2015"]}},
+            { test: /\.js$/,exclude:/(node_modules|bower_components)/,loader : 'babel',query : {presets:["es2015"]}},
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.html$/,loader: 'html' },
             { test: /\.sass$/, loader: 'style!css!sass?sourceMap'},

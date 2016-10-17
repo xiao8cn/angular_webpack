@@ -69,13 +69,12 @@ const commonBoxComponent = {
                     data[key] = $scope.select[key].id;
                 }
             }
-
-            console.log(data);
             scmAjaxService.searchCommonBox(data,href,param,$scope)
         };
 
         $scope.gridOptions.onRegisterApi = function(gridApi){
             gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                console.log(row);
                 if(row.isSelected){
                     ctrl.selectRow = row;
                 }else{
@@ -85,7 +84,6 @@ const commonBoxComponent = {
         };
 
         ctrl.save = ()=> {
-            console.log(ctrl.selectRow);
             ctrl.close({$value: ctrl.selectRow});
         }
 

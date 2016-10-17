@@ -4,16 +4,14 @@ import { CommonComponentBox } from "../../../common/global_val";
 
 const customerInformationManagerAddComponent = {
     template : template,
-    bindings : {
-    },
+    bindings : {},
     style : selectCss,
     controller: function($scope,$http,$uibModal) {
-
-        var ctrl = this,
+        let ctrl = this,
             param = {
                 "RequestID":"9999",
                 "RequestFormat":"JSON",
-                "SessionKey":"2ac30b56-7804-44ae-9523-3328eedc7633",
+                "SessionKey":"072bf31c-b05e-4641-8174-09d0e7d4141a",
                 "SessionTimeout":"60",
                 "Version":"1.0",
                 "DBRequest":{
@@ -110,10 +108,20 @@ const customerInformationManagerAddComponent = {
 
             modalInstance.result.then(selectedItem=>{
                 $scope.myForm[val] = selectedItem.entity;
-                console.log(selectedItem.entity);
+                console.log($scope.myForm[val]);
             }, function ($scope) {
                 $log.info('modal-component dismissed at: ' + new Date());
             });
+        }
+
+        ctrl.save = ()=> {
+            console.log($scope.myForm);
+            console.log("保存");
+            // ctrl.close({$value: ctrl.selectRow});
+        }
+
+        ctrl.cancel = ()=>{
+            ctrl.dismiss({$value: 'cancel'});
         }
 
 
