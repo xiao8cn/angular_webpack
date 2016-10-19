@@ -7,8 +7,7 @@ const commonBoxComponent = {
         close: '&',
         dismiss: '&'
     },
-    controller: function ($scope,$log,$http,i18nService,scmAjaxService) {
-
+    controller: function ($scope,$log,$http,$timeout,i18nService,scmAjaxService) {
         let ctrl = this,
             option = ctrl.resolve.option || {},
             href = option.href,
@@ -38,6 +37,7 @@ const commonBoxComponent = {
         $scope.gridOptions.paginationPageSizes = gridOption.paginationPageSizes || [5, 10, 20];
         $scope.gridOptions.paginationPageSize = gridOption.paginationPageSize || 5;
         $scope.gridOptions.multiSelect = gridOption.multiSelect || false;
+        $scope.gridOptions.enableSelectAll = gridOption.enableSelectAll || false;
         if(!gridOption.columnDefs){
             $scope.gridOptions.columnDefs = [
                 { name: 'CUSTOMER_CODE', enableCellEdit: false,displayName:"客户编码" ,enableColumnMenu: false},
@@ -48,14 +48,24 @@ const commonBoxComponent = {
                 { name: 'ADDRESS', enableCellEdit: false,displayName:"地址" ,enableColumnMenu: false},
             ];
         }else{
-            console.log(gridOption.columnDefs);
             $scope.gridOptions.columnDefs = gridOption.columnDefs;
         }
 
+        $scope.gridOptions.onRegisterApi = function(gridApi){
+            gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                if(row.isSelected){
+                    ctrl.selectRow = row;
+                }else{
+                    ctrl.selectRow = {};
+                }
+            });
+        };
+
         scmAjaxService.getAjaxJsonp(href,param)
             .then(res=>{
-                $scope.gridOptions.data = res;
-                this.search();
+                $timeout(()=>{
+                    $scope.gridOptions.data = res.DBData;
+                },100);
             })
 
         ctrl.search = () => {
@@ -70,17 +80,6 @@ const commonBoxComponent = {
                 }
             }
             scmAjaxService.searchCommonBox(data,href,param,$scope)
-        };
-
-        $scope.gridOptions.onRegisterApi = function(gridApi){
-            gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                console.log(row);
-                if(row.isSelected){
-                    ctrl.selectRow = row;
-                }else{
-                    ctrl.selectRow = {};
-                }
-            });
         };
 
         ctrl.save = ()=> {

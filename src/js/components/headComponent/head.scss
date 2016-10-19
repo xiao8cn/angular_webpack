@@ -1,0 +1,55 @@
+$cur: pointer;
+
+$lineHeight: 20px;
+
+.aosTopLayout {
+  overflow: hidden;
+  height: 86px;
+}
+
+.mesTop_bg {
+  width: 100%;
+  height: 93px;
+  float: left;
+  background-color: #344f6a;
+  .companyLogo {
+    width: 436px;
+    height: 61px;
+    float: left;
+    margin: 16px;
+  }
+  .mesTop_userImage {
+    float: right;
+    height: 64px;
+    width: 64px;
+    margin: 13px 20px 0 0;
+    cursor: $cur;
+  }
+  .mesTop_userreturn {
+    float: right;
+    margin: 28px 40px 0 0;
+    cursor: $cur;
+  }
+  .mesTop_message {
+    float: right;
+    height: 40px;
+    width: 240px;
+    font-size: 12px;
+    margin: 21px 10px 5px 0;
+    ul {
+      padding-left: 0;
+      li {
+        list-style: none;
+        height: $lineHeight;
+        line-height: $lineHeight;
+        text-align: right;
+        width: 240px;
+        color: #FFF;
+        span {
+          cursor: $cur;
+          color: #ebe415;
+        }
+      }
+    }
+  }
+}

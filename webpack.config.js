@@ -25,7 +25,7 @@ module.exports = {
      * @param publicPath js路径,path 路径配置,filename --hot 模式下需要 bundle.js
      */
     output: {
-        publicPath: "http://127.0.0.1:8080/dist/js/main",
+        publicPath: "http://172.16.9.145:8080/dist/js/main",
         path: path.resolve(__dirname, "dist/js/main"),
         filename: "bundle.js",
         // filename : "[name].js"
@@ -33,11 +33,11 @@ module.exports = {
     module: {
         //加载器配置
         loaders: [
-            { test: /\.js$/,exclude:/(node_modules|bower_components)/,loader : 'babel',query : {presets:["es2015"]}},
+            { test: /\.js$/,exclude:/(node_modules)/,loader : 'babel',query : {presets:["es2015"]}},
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.html$/,loader: 'html' },
-            { test: /\.sass$/, loader: 'style!css!sass?sourceMap'},
-            { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
+            { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
+            { test: /\.(png|jpg)$/, loader: 'file-loader?limit=8192'},
         ]
     },
     //其它解决方案配置

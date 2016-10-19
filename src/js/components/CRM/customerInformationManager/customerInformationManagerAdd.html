@@ -11,7 +11,7 @@
                         <small><strong>客户编号：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input ng-required="true" type="text" name="customer_no" class="form-control" placeholder="客户编号" disabled="disabled"/>
+                        <input type="text" name="customer_no" class="form-control" placeholder="客户编号" disabled="disabled"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.customer_no.$dirty && myForm.customer_no.$valid"></span>
                     </div>
@@ -74,7 +74,7 @@
                         <small><strong>企业类型：</strong></small>
                     </div>
                     <div class="col-md-4" ng-class="{'has-error' : myForm.CUSTOMER_TYPE.$invalid}">
-                        <ui-select ng-model="customer.CUSTOMER_TYPE" name="CUSTOMER_TYPE" theme="select2" style="min-width: 200px;" title="Choose a person" required="true">
+                        <ui-select ng-model="customer.CUSTOMER_TYPE" name="CUSTOMER_TYPE" theme="select2" style="min-width: 200px;" title="Choose a person" >
                             <ui-select-match placeholder="请选择">{{$select.selected.text}}</ui-select-match>
                             <ui-select-choices repeat="cust in $ctrl.CUSTOMER_TYPE | propsFilter: {id: $select.search, text: $select.search}">
                                 <div>{{cust.text}}</div>
@@ -337,8 +337,8 @@
                     <div class="col-md-2">
                         <small><strong>销售组织：</strong></small>
                     </div>
-                    <div class="col-md-4" ng-class="{'has-error' : myForm.ORG_NAME.$invalid}">
-                        <input type="text" ng-click="$ctrl.openModal('ORG_NAME')" ng-model="myForm.ORG_NAME.ORG_NAME" value="{{myForm.ORG_NAME.ORG_NAME}}" class="form-control" name="ORG_NAME" placeholder="请选择"
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.PUR_ORG.$invalid}">
+                        <input type="text" ng-click="$ctrl.openModal('PUR_ORG')" ng-model="myForm.PUR_ORG.ORG_NAME" value="{{myForm.PUR_ORG.ORG_NAME}}" class="form-control" name="PUR_ORG" placeholder="请选择"
                                required
                                uib-tooltip="必输"
                                tooltip-placement="left"
@@ -353,8 +353,8 @@
                     <div class="col-md-2">
                         <small><strong>销售人员：</strong></small>
                     </div>
-                    <div class="col-md-4" ng-class="{'has-error' : myForm.SALES_NAME_CN.$invalid}">
-                        <input type="text" ng-click="$ctrl.openModal('SALES_NAME_CN')" ng-model="myForm.SALES_NAME_CN.NAME_CN" value="{{myForm.SALES_NAME_CN.NAME_CN}}" class="form-control" name="SALES_NAME_CN" placeholder="销售人员"
+                    <div class="col-md-4" ng-class="{'has-error' : myForm.PUR_MAN.$invalid}">
+                        <input type="text" ng-click="$ctrl.openModal('PUR_MAN')" ng-model="myForm.PUR_MAN.NAME_CN" value="{{myForm.PUR_MAN.NAME_CN}}" class="form-control" name="PUR_MAN" placeholder="销售人员"
                                required
                                uib-tooltip="必输"
                                tooltip-placement="left"

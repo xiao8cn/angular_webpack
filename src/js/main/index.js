@@ -9,7 +9,10 @@ import indexComponent from "./index.component";
 
 import ComponentsModule from "../components/components";
 
+import servicesModule from "../service/services";
+
 let scm_web = angular.module("scm",[
+    servicesModule.name,
     ComponentsModule.name,
     'ui.router',
     'ui.bootstrap',
@@ -52,7 +55,7 @@ scm_web.config(function($stateProvider) {
                     param : {
                         "RequestID":"9999",
                         "RequestFormat":"JSON",
-                        "SessionKey":"072bf31c-b05e-4641-8174-09d0e7d4141a",
+                        "SessionKey":"052dbe18-27ce-4577-bfdb-0928b540b1cc",
                         "SessionTimeout":"60",
                         "Version":"1.0",
                         "DBRequest":{
@@ -67,23 +70,29 @@ scm_web.config(function($stateProvider) {
                         }
                     },
                     gridOption : {
-                        paginationPageSizes: [5, 10, 20],
-                        paginationPageSize: 5,
+                        paginationPageSizes: [10, 20, 30],
+                        paginationPageSize: 10,
+                        enableCellEditOnFocus : true,
+                        enableGridMenu : true,
+                        multiSelect : true ,
+                        enableSelectAll : false,
+                        useExternalPagination: true,
+                        // enableFullRowSelection : true,
                         columnDefs : [
-                            { name: 'GID', enableCellEdit: false, displayName:"编号", },
-                            { name: 'AREA', enableCellEditOnFocus:false, displayName:'地区',   },
-                            { name: 'CUSTOMER_CODE', enableCellEdit: true, displayName:'客户代码' },
-                            { name: 'NAME_CN', displayName: '客户名称', },
-                            { name: 'NAME_EN', displayName: '英文名称',},
-                            { name: 'CUSTOMER_TYPE_NAME', displayName: '企业类型',},
-                            { name: 'TRADE_NAME', displayName: '行业',},
-                            { name: 'CONTACTS', displayName: '联系人', },
-                            { name: 'TEL', displayName: '联系电话', },
-                            { name: 'ADDRESS', displayName: '注册地址', },
-                            { name: 'CUSTOMER_STATUS_NAME', displayName: '状态', },
-                            { name: 'IMPORTANCE_DEGREE', displayName: '客户重要度', },
-                            { name: 'INVOICE_TYPE', displayName: '发票种类', },
-                            { name: 'PUR_MAN_TEL', displayName: '销售手机号码', },
+                            { name: 'GID', enableCellEdit: false, displayName:"编号",enableColumnMenu: false },
+                            { name: 'AREA', enableCellEdit: false, displayName:'地区',   enableColumnMenu: false},
+                            { name: 'CUSTOMER_CODE', enableCellEdit: false, displayName:'客户代码',enableColumnMenu: false },
+                            { name: 'NAME_CN', enableCellEdit: false,displayName: '客户名称',enableColumnMenu: false },
+                            { name: 'NAME_EN', enableCellEdit: false,displayName: '英文名称',enableColumnMenu: false},
+                            { name: 'CUSTOMER_TYPE_NAME', enableCellEdit: false,displayName: '企业类型',enableColumnMenu: false},
+                            { name: 'TRADE_NAME', enableCellEdit: false,displayName: '行业',enableColumnMenu: false},
+                            { name: 'CONTACTS', enableCellEdit: false,displayName: '联系人', enableColumnMenu: false},
+                            { name: 'TEL', enableCellEdit: false,displayName: '联系电话', enableColumnMenu: false},
+                            { name: 'ADDRESS', enableCellEdit: false,displayName: '注册地址', enableColumnMenu: false},
+                            { name: 'CUSTOMER_STATUS_NAME', enableCellEdit: false,displayName: '状态', enableColumnMenu: false},
+                            { name: 'IMPORTANCE_DEGREE', enableCellEdit: false,displayName: '客户重要度', enableColumnMenu: false},
+                            { name: 'INVOICE_TYPE', enableCellEdit: false,displayName: '发票种类', enableColumnMenu: false},
+                            { name: 'PUR_MAN_TEL', enableCellEdit: false,displayName: '销售手机号码', enableColumnMenu: false},
                         ]
                     },
                 }
@@ -135,7 +144,7 @@ scm_web.service("scmAjaxService",function($http){
                 param = JSON.stringify(param);
                 $http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`)
                     .success(res => {
-                        resolve(res.DBData);
+                        resolve(res);
                     })
                     .error((res,status)=>{
                         reject(res,status)
@@ -155,7 +164,7 @@ scm_web.service("scmAjaxService",function($http){
             this.getAjaxJsonp(href,param)
                 .then(res=>{
                     $scope.$apply(function () {
-                        $scope.gridOptions.data = res || [];
+                        $scope.gridOptions.data = res.DBData || [];
                         param.DBRequest.Where = oldWhere;
                     });
                 })

@@ -4,9 +4,12 @@ import { CommonComponentBox } from "../../../common/global_val";
 
 const customerInformationManagerAddComponent = {
     template : template,
-    bindings : {},
+    bindings : {
+        close: '&',
+        dismiss: '&'
+    },
     style : selectCss,
-    controller: function($scope,$http,$uibModal) {
+    controller: function($scope,$http,$uibModal,scmAjaxService) {
         let ctrl = this,
             param = {
                 "RequestID":"9999",
@@ -43,7 +46,6 @@ const customerInformationManagerAddComponent = {
 
         $http.jsonp(`http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf?callback=JSON_CALLBACK&param=${param}`)
             .success(res => {
-                console.log(JSON.stringify(res.DBData.CUSTOMER_TYPE));
                 ctrl.CUSTOMER_TYPE = res.DBData.CUSTOMER_TYPE;
                 ctrl.INVOICE_TYPE = res.DBData.INVOICE_TYPE;
                 ctrl.TAX_TYPE = res.DBData.TAX_TYPE;
@@ -108,6 +110,12 @@ const customerInformationManagerAddComponent = {
 
             modalInstance.result.then(selectedItem=>{
                 $scope.myForm[val] = selectedItem.entity;
+                if($scope.myForm.$$success.commonBox){
+                    $scope.myForm.$$success.commonBox[val] = selectedItem.entity;
+                }else{
+                    $scope.myForm.$$success.commonBox = {};
+                    $scope.myForm.$$success.commonBox[val] = selectedItem.entity;
+                }
                 console.log($scope.myForm[val]);
             }, function ($scope) {
                 $log.info('modal-component dismissed at: ' + new Date());
@@ -117,14 +125,52 @@ const customerInformationManagerAddComponent = {
         ctrl.save = ()=> {
             console.log($scope.myForm);
             console.log("保存");
-            // ctrl.close({$value: ctrl.selectRow});
+
+            if($scope.myForm.$valid){
+
+                let data ={};
+
+                $scope.myForm.$$success.parse.map(res=>{
+                    data[res.$name] = res.$viewValue
+                })
+
+                for(let key in $scope.myForm.$$success.commonBox){
+                    data[key] = $scope.myForm.$$success.commonBox[key][key];
+                }
+
+                console.log(data);
+                console.log(JSON.stringify(data));
+
+                let param = {
+                    "RequestID":"9999",
+                    "RequestFormat":"JSON",
+                    "SessionKey":"072bf31c-b05e-4641-8174-09d0e7d4141a",
+                    "SessionTimeout":"60",
+                    "Version":"1.0",
+                    "DBRequest":{
+                        "Field":[
+                            data
+                        ],
+                        "Page":{
+                            "Start":"1",
+                            "End":"30"
+                        }
+                    }
+                };
+
+                scmAjaxService.getAjaxJsonp("http://10.99.2.61:8083/SCM/CRM/CUSTOMER/insertCustomer",param)
+                    .then(res=>{
+                        console.log(res);
+                        ctrl.close({$value: "success"});
+                    });
+            }else{
+                console.log("验证未通过");
+            }
         }
 
         ctrl.cancel = ()=>{
             ctrl.dismiss({$value: 'cancel'});
         }
-
-
     }
 }
 

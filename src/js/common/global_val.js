@@ -1,5 +1,6 @@
 
-let CinterFaceUrl = "http://10.99.2.61:8083";
+let CinterFaceUrl = "http://10.99.2.61:8083",
+    sessionKey = "052dbe18-27ce-4577-bfdb-0928b540b1cc";
 
 export const CommonComponentBox = {
     "CONTACT_CUST" : {
@@ -7,7 +8,7 @@ export const CommonComponentBox = {
         param : {
             "RequestID":"9999",
             "RequestFormat":"JSON",
-            "SessionKey":"e7ba24d2-8806-46bf-831c-ca1e9e8620fb",
+            "SessionKey":sessionKey,
             "SessionTimeout":"60",
             "Version":"1.0",
             "DBRequest":{
@@ -38,9 +39,10 @@ export const CommonComponentBox = {
         gridOptions:{
             enableCellEditOnFocus : true,
             enableGridMenu : true,
-            paginationPageSizes : [5, 10, 20],
+            paginationPageSizes : [10, 20, 30],
             paginationPageSize : 5,
             multiSelect : false,
+            enableSelectAll : false,
             columnDefs : [
                 { name: 'CUSTOMER_CODE', enableCellEdit: false,displayName:"客户编码" ,enableColumnMenu: false},
                 { name: 'NAME_CN', enableCellEdit: false,displayName:"客户名称" ,enableColumnMenu: false},
@@ -56,7 +58,7 @@ export const CommonComponentBox = {
         param : {
             "RequestID":"9999",
             "RequestFormat":"JSON",
-            "SessionKey":"1591ac3e-c05b-4332-af47-525b5242d1aa",
+            "SessionKey":sessionKey,
             "SessionTimeout":"60",
             "Version":"1.0",
             "DBRequest":{
@@ -87,8 +89,8 @@ export const CommonComponentBox = {
         gridOptions:{
             enableCellEditOnFocus : true,
             enableGridMenu : true,
-            paginationPageSizes : [5, 10, 20],
-            paginationPageSize : 5,
+            paginationPageSizes : [10, 20, 30],
+            paginationPageSize : 10,
             multiSelect : false,
             columnDefs : [
                 { name: 'PAY_CON_CODE', enableCellEdit: false,displayName:"编号" ,enableColumnMenu: false,width:100},
@@ -111,7 +113,7 @@ export const CommonComponentBox = {
         param : {
             "RequestID":"9999",
             "RequestFormat":"JSON",
-            "SessionKey":"1591ac3e-c05b-4332-af47-525b5242d1aa",
+            "SessionKey":sessionKey,
             "SessionTimeout":"60",
             "Version":"1.0",
             "DBRequest":{
@@ -172,9 +174,10 @@ export const CommonComponentBox = {
         gridOptions:{
             enableCellEditOnFocus : true,
             enableGridMenu : true,
-            paginationPageSizes : [5, 10, 20],
-            paginationPageSize : 5,
+            paginationPageSizes : [10, 20, 30],
+            paginationPageSize : 10,
             multiSelect : false,
+            enableSelectAll : false,
             columnDefs : [
                 { name: 'COUNTRY', enableCellEdit: false,displayName:"国家(IOS)" ,enableColumnMenu: false,width:100},
                 { name: 'PROVINCE', enableCellEdit: false,displayName:"省(直辖市)" ,enableColumnMenu: false,width:100},
@@ -195,7 +198,7 @@ export const CommonComponentBox = {
         param : {
             "RequestID":"9999",
             "RequestFormat":"JSON",
-            "SessionKey":"1591ac3e-c05b-4332-af47-525b5242d1aa",
+            "SessionKey":sessionKey,
             "SessionTimeout":"60",
             "Version":"1.0",
             "DBRequest":{
@@ -267,9 +270,10 @@ export const CommonComponentBox = {
         gridOptions:{
             enableCellEditOnFocus : true,
             enableGridMenu : true,
-            paginationPageSizes : [5, 10, 20],
-            paginationPageSize : 5,
+            paginationPageSizes : [10, 20, 30],
+            paginationPageSize : 10,
             multiSelect : false,
+            enableSelectAll : false,
             columnDefs : [
                 { name: 'COUNTRY', enableCellEdit: false,displayName:"国家(IOS)" ,enableColumnMenu: false,width:100},
                 { name: 'PROVINCE', enableCellEdit: false,displayName:"省(直辖市)" ,enableColumnMenu: false,width:100},
@@ -285,12 +289,12 @@ export const CommonComponentBox = {
             ],
         }
     },
-    "ORG_NAME" :{
+    "PUR_ORG" :{
         href : `${CinterFaceUrl}/SCM/BusinessBase/IterParentOrg/getIterParentOrgView`,
         param : {
             "RequestID":"9999",
             "RequestFormat":"JSON",
-            "SessionKey":"1591ac3e-c05b-4332-af47-525b5242d1aa",
+            "SessionKey":sessionKey,
             "SessionTimeout":"60",
             "Version":"1.0",
             "DBRequest":{
@@ -405,6 +409,7 @@ export const CommonComponentBox = {
             paginationPageSizes : [5, 10, 20],
             paginationPageSize : 5,
             multiSelect : false,
+            enableSelectAll : false,
             columnDefs : [
                 { name: 'ORG_CODE', enableCellEdit: false,displayName:"组织编码" ,enableColumnMenu: false,width:100},
                 { name: 'ORG_NAME', enableCellEdit: false,displayName:"组织名称" ,enableColumnMenu: false,width:100},
@@ -421,12 +426,12 @@ export const CommonComponentBox = {
             ],
         }
     },
-    "SALES_NAME_CN" : {
+    "PUR_MAN" : {
         href : `${CinterFaceUrl}/SCM/BusinessBase/ItersalesPersonView/getItersalesPersonView`,
         param : {
             "RequestID":"9999",
             "RequestFormat":"JSON",
-            "SessionKey":"1591ac3e-c05b-4332-af47-525b5242d1aa",
+            "SessionKey":sessionKey,
             "SessionTimeout":"60",
             "Version":"1.0",
             "DBRequest":{
@@ -470,6 +475,7 @@ export const CommonComponentBox = {
             paginationPageSizes : [5, 10, 20],
             paginationPageSize : 5,
             multiSelect : false,
+            enableSelectAll : false,
             columnDefs : [
                 { name: 'EMPLOYEE_CODE', enableCellEdit: false,displayName:"员工编号" ,enableColumnMenu: false},
                 { name: 'NAME_CN', enableCellEdit: false,displayName:"员工中文姓名" ,enableColumnMenu: false},

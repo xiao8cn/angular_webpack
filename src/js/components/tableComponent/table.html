@@ -1,16 +1,42 @@
+<br/>
 <div class="panel-group" id="tableComponent1">
     <div class="panel panel-info">
         <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#tableComponent1" href="#tableComponentOne">
-            <h3 class="panel-title accordion-toggle">{{$ctrl.title}}</h3>
+            <h3 class="panel-title accordion-toggle">查询</h3>
         </div>
         <div id="tableComponentOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="tableComponent1">
             <div class="panel-body">
+                <form class="navbar-form row" role="search">
+                    <div class="col-md-3 form-group">
+                        <span>{{$ctrl.searchSelectType1.text}}</span>
+                        <select style="min-width:180px;" ng-click="look(this)" ng-model="$ctrl.searchSelectType1" class="form-control" value="" ng-options="item as item.text for item in $ctrl.selectType1 track by item.id"><option></option></select>
+                    </div>
+                    <input style="width:500px;" type="text" class="form-control" name="searchSelectValue1" placeholder="{{$ctrl.searchSelectType1.text}}" ng-model="searchSelectValue1"/>
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'search'" ng-click="$ctrl.search()">查询</label>
+                        <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'clear'" ng-click="$ctrl.clear()">清理</label>
+                        <label class="btn btn-danger" ng-model="radioModel" uib-btn-radio="'highSearch'" ng-click="$ctrl.highSearch()">高级查询</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="panel-group" id="tableComponent2">
+    <div class="panel panel-info">
+        <div class="panel-heading" role="tab" data-toggle="collapse" data-parent="#tableComponent2" href="#tableComponentTwo">
+            <h3 class="panel-title accordion-toggle">{{$ctrl.title}}</h3>
+        </div>
+        <div id="tableComponentTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="tableComponent2">
+            <div class="panel-body">
                 <div class="btn-group">
                     <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'add'" ng-click="$ctrl.add()">增加</label>
-                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'modify'">修改</label>
-                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'delete'">删除</label>
+                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'modify'" ng-click="$ctrl.modify()">修改</label>
+                    <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'delete'" ng-click="$ctrl.delete()">删除</label>
                 </div>
-                <div ui-grid="gridOptions" ui-grid-edit  ui-grid-pagination ui-grid-cellnav class="grid"></div>
+                <hr style="border-top:1px solid #e5e5e5"/>
+                <div ui-grid="gridOptions" ui-grid-edit ui-grid-selection ui-grid-pagination ui-grid-cellnav class="grid"></div>
             </div>
         </div>
     </div>
