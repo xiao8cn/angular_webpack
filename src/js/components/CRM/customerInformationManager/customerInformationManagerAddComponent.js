@@ -5,6 +5,7 @@ import { CommonComponentBox } from "../../../common/global_val";
 const customerInformationManagerAddComponent = {
     template : template,
     bindings : {
+        resolve:'<',
         close: '&',
         dismiss: '&'
     },
@@ -14,7 +15,7 @@ const customerInformationManagerAddComponent = {
             param = {
                 "RequestID":"9999",
                 "RequestFormat":"JSON",
-                "SessionKey":"072bf31c-b05e-4641-8174-09d0e7d4141a",
+                "SessionKey":"3f217300-5948-4e88-95ed-38920d83c9e1",
                 "SessionTimeout":"60",
                 "Version":"1.0",
                 "DBRequest":{
@@ -40,7 +41,30 @@ const customerInformationManagerAddComponent = {
                 }
             };
 
-        $scope.customer={};
+            ctrl.$onInit = function(){
+                $scope.customer = ctrl.resolve.customer || {};
+                $scope.customer.PUR_ORG = {};
+                $scope.customer.PUR_ORG.ORG_NAME = $scope.customer.ORG_NAME;
+                $scope.customer.PUR_MAN = {};
+                $scope.customer.PUR_MAN.NAME_CN = $scope.customer.SALES_NAME_CN;
+                $scope.buttonType = ctrl.resolve.buttonType;
+                console.log($scope.customer);
+            }
+
+
+        // let aaaparam = {"requestId":"123","page":{"start":"1","pageSize":"1"},"conditions":[{"field":"GID","value":"2","option":"0"}],"order":[{"field":"CREATE_TIME","type":"1"}]};
+
+        /*$http({
+            method : "POST",
+            url : "http://10.99.2.61:8082/SCM/PUB/pubStoreHouseQuery",
+            data : {param:aaaparam},
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Accept' : "application/json, text/javascript, *!/!*; q=0.01",
+            }
+        }).success(res=>{
+            console.log(res);
+        })*/
 
         param = JSON.stringify(param);
 
@@ -53,6 +77,15 @@ const customerInformationManagerAddComponent = {
                 ctrl.TRADE = res.DBData.TRADE;
                 ctrl.AREA = res.DBData.AREA;
                 ctrl.CHANNEL = res.DBData.CHANNEL;
+
+                if($scope.customer.CUSTOMER_TYPE){
+                    $scope.customer.CUSTOMER_TYPE = ctrl.CUSTOMER_TYPE.filter(res=>res.id == $scope.customer.CUSTOMER_TYPE)[0]
+                }
+                if($scope.customer.INVOICE_TYPE){
+                    $scope.customer.INVOICE_TYPE = ctrl.INVOICE_TYPE.filter(res=>res.id == $scope.customer.INVOICE_TYPE)[0]
+                }
+
+                // $scope.customer.CUSTOMER_TYPE = ctrl.CUSTOMER_TYPE[0];
             })
 
         ctrl.CUSTOMER_STATUS = [{"id":"1", "text":"启用"}, {"id":"2", "text":"禁用"}];
@@ -112,9 +145,11 @@ const customerInformationManagerAddComponent = {
                 $scope.myForm[val] = selectedItem.entity;
                 if($scope.myForm.$$success.commonBox){
                     $scope.myForm.$$success.commonBox[val] = selectedItem.entity;
+                    $scope.customer[val] = selectedItem.entity;
                 }else{
                     $scope.myForm.$$success.commonBox = {};
                     $scope.myForm.$$success.commonBox[val] = selectedItem.entity;
+                    $scope.customer[val] = selectedItem.entity;
                 }
                 console.log($scope.myForm[val]);
             }, function ($scope) {
@@ -159,6 +194,58 @@ const customerInformationManagerAddComponent = {
                 };
 
                 scmAjaxService.getAjaxJsonp("http://10.99.2.61:8083/SCM/CRM/CUSTOMER/insertCustomer",param)
+                    .then(res=>{
+                        console.log(res);
+                        ctrl.close({$value: "success"});
+                    });
+            }else{
+                console.log("验证未通过");
+            }
+        }
+
+        ctrl.modify = ()=>{
+            console.log("修改");
+
+            if($scope.myForm.$valid){
+
+                let data ={};
+
+                if($scope.myForm.$$success.parse){
+                    $scope.myForm.$$success.parse.map(res=>{
+                        console.log(typeof res.$viewValue);
+                        if(typeof res.$viewValue === "object"){
+                            data[res.$name] = res.$viewValue.id
+                        }else{
+                            data[res.$name] = res.$viewValue
+                        }
+                    })
+                }
+
+                if($scope.myForm.$$success.commonBox){
+                    for(let key in $scope.myForm.$$success.commonBox){
+                        let valueKey = document.querySelector(`input[key=${key}]`).getAttribute("keyText");
+                        data[key] = $scope.myForm.$$success.commonBox[key][valueKey];
+                    }
+                }
+
+                console.log(data);
+                console.log(JSON.stringify(data));
+
+                let param = {
+                    "RequestID":"9999",
+                    "RequestFormat":"JSON",
+                    "SessionKey":"072bf31c-b05e-4641-8174-09d0e7d4141a",
+                    "SessionTimeout":"60",
+                    "Version":"1.0",
+                    "DBRequest":{
+                        "Field": data,
+                        "Where" :` GID = ${$scope.customer.GID} `
+                    }
+                };
+
+                console.log(param);
+
+                scmAjaxService.getAjaxJsonp("http://10.99.2.61:8083/SCM/CRM/CUSTOMER/updateCustomer",param)
                     .then(res=>{
                         console.log(res);
                         ctrl.close({$value: "success"});

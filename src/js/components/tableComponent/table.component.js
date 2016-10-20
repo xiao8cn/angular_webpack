@@ -20,6 +20,49 @@ const tableComponent = {
         this.$onInit = ()=>{
             i18nService.setCurrentLang(lang);
             this.refreshTable(1,gridOption.paginationPageSize,href,param);
+
+            let udfParam = {
+                "RequestID":"9999",
+                "RequestFormat":"JSON",
+                "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                "SessionTimeout":"60",
+                "Version":"1.0",
+                "DBRequest":{
+                    "Field":[
+                        {
+                            "UDF_CODE":[
+                                "CUSTOMER_TYPE",
+                                "INVOICE_TYPE",
+                                "TAX_TYPE",
+                                "IMPORTANCE_DEGREE",
+                                "TRADE",
+                                "AREA",
+                                "CHANNEL"
+                            ]
+                        },
+                        "UDF_ID",
+                        "UDF_ITEM_NAME"
+                    ],
+                    "Page":{
+                        "Start":"1",
+                        "End":"30"
+                    }
+                }
+            };
+
+            $http.jsonp(`http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf?callback=JSON_CALLBACK&param=${JSON.stringify(udfParam)}`)
+                .success(res => {
+                    console.log(res);
+                    ctrl.CUSTOMER_TYPE = res.DBData.CUSTOMER_TYPE;
+                    ctrl.INVOICE_TYPE = res.DBData.INVOICE_TYPE;
+                    ctrl.TAX_TYPE = res.DBData.TAX_TYPE;
+                    ctrl.IMPORTANCE_DEGREE = res.DBData.IMPORTANCE_DEGREE;
+                    ctrl.TRADE = res.DBData.TRADE;
+                    ctrl.AREA = res.DBData.AREA;
+                    ctrl.CHANNEL = res.DBData.CHANNEL;
+                })
+
+
         }
 
         this.title = option.title;
@@ -35,22 +78,63 @@ const tableComponent = {
                 component: 'customerAddComponent',
                 windowClass:"addScmModal",
                 resolve: {
-
+                    buttonType :function(){
+                        return "add";
+                    }
                 }
             });
 
             modalInstance.result.then(function (selectedItem) {
-                console.log(selectedItem);
                 if(selectedItem === "success"){
                     ctrl.refreshTable(1,gridOption.paginationPageSize,href,param);
+                    ctrl.selectRows = [];
                 }
             }, function ($scope) {
                 console.log($scope);
             });
         }
 
+        $scope.alerts = [];
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
+
+        this.modify = function(){
+            if((ctrl.selectRows.length === 0 || ctrl.selectRows.length > 1) && $scope.alerts.length===0){
+                $scope.alerts.push({type:"warning",msg: "请选择一条数据!",timeout:"2000"});
+            }else if(ctrl.selectRows.length === 1){
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    size : "lg",
+                    // appendTo: document.querySelector("table_modal"),
+                    component: 'customerAddComponent',
+                    windowClass:"addScmModal",
+                    resolve: {
+                        customer : function(){
+                            return ctrl.selectRows[0].entity;
+                        },
+                        buttonType :function(){
+                            return "modify";
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    console.log(selectedItem);
+                    if(selectedItem === "success"){
+                        ctrl.refreshTable(1,gridOption.paginationPageSize,href,param);
+                        ctrl.selectRows = [];
+                    }
+                }, function ($scope) {
+                    console.log($scope);
+                });
+
+            }
+        }
+
         /**
-         * 修改 function
+         * 刪除 function
          */
         this.delete = function(){
             if(ctrl.selectRows.length>=0){
@@ -85,12 +169,11 @@ const tableComponent = {
                      }
                  }
 
-                 console.log(delparam);
-
                 scmAjaxService.getAjaxJsonp(delHref,delparam)
                  .then(res=>{
                      console.log(res);
                      ctrl.refreshTable(1,gridOption.paginationPageSize,href,param);
+                     ctrl.selectRows = [];
                  })
             }else{
                 
@@ -102,7 +185,6 @@ const tableComponent = {
             if($scope.searchSelectValue1){
                 swhere += ` 1=1 and ${ctrl.searchSelectType1.id} like ${$scope.searchSelectValue1} order by GID desc`;
                 param.DBRequest.Where = swhere;
-                console.log(swhere);
                 $scope.gridOptions.data = [];
                 this.refreshTable(1,gridOption.paginationPageSize,href,param);
             }else{
@@ -110,6 +192,14 @@ const tableComponent = {
                 $scope.gridOptions.data = [];
                 this.refreshTable(1,gridOption.paginationPageSize,href,param);
             }
+        }
+
+        this.clear = function(){
+            $scope.searchSelectValue1 = "";
+        }
+
+        this.highSearch = function(){
+
         }
 
         $scope.gridOptions = gridOption;
@@ -169,6 +259,19 @@ const tableComponent = {
                     .then(res=>{
                         if(res.DBData){
                             $timeout(()=>{
+                                console.log(ctrl);
+                                console.log(res.DBData);
+                                res.DBData.map(res=>{
+                                    // ["CUSTOMER_TYPE", "INVOICE_TYPE", "TAX_TYPE", "IMPORTANCE_DEGREE", "TRADE", "AREA", "CHANNEL"]
+                                    if(res.CUSTOMER_TYPE){
+                                        let data = ctrl.CUSTOMER_TYPE.filter(res2=>res2.id == res.CUSTOMER_TYPE);
+                                        res.CUSTOMER_TYPE_NAME = data[0].text;
+                                    }
+                                    if(res.INVOICE_TYPE){
+                                        let data = ctrl.INVOICE_TYPE.filter(res2=>res2.id == res.INVOICE_TYPE);
+                                        res.INVOICE_TYPE_NAME = data[0].text;
+                                    }
+                                })
                                 $scope.gridOptions.paginationCurrentPage = newPage;
                                 $scope.gridOptions.totalItems = res.DBCount;
                                 $scope.gridOptions.data = res.DBData;

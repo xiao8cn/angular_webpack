@@ -11,16 +11,16 @@
                         <small><strong>客户编号：</strong></small>
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="customer_no" class="form-control" placeholder="客户编号" disabled="disabled"/>
+                        <input type="text" name="customer_no" class="form-control" placeholder="客户编号" disabled="disabled" ng-model="customer.CUSTOMER_CODE" value="customer.CUSTOMER_CODE"/>
                         <span class="glyphicon glyphicon-ok form-control-feedback" style="padding-right:20px"
                               ng-show="myForm.customer_no.$dirty && myForm.customer_no.$valid"></span>
                     </div>
 
                     <div class="col-md-2">
-                        <small><strong>中文名称：</strong></small>
+                        <small><strong>中文名称：{{customer.NAME_CN}}</strong></small>
                     </div>
                     <div class="col-md-4" ng-class="{'has-error' : myForm.NAME_CN.$invalid}">
-                        <input type="text" class="form-control" name="NAME_CN" required placeholder="中文名称" ng-model="customer.NAME_CN"
+                        <input type="text" class="form-control" name="NAME_CN" required placeholder="中文名称" ng-model="customer.NAME_CN" value="customer.NAME_CN"
                                uib-tooltip="必输"
                                tooltip-placement="left"
                                tooltip-trigger="'mouseenter'"
@@ -338,12 +338,14 @@
                         <small><strong>销售组织：</strong></small>
                     </div>
                     <div class="col-md-4" ng-class="{'has-error' : myForm.PUR_ORG.$invalid}">
-                        <input type="text" ng-click="$ctrl.openModal('PUR_ORG')" ng-model="myForm.PUR_ORG.ORG_NAME" value="{{myForm.PUR_ORG.ORG_NAME}}" class="form-control" name="PUR_ORG" placeholder="请选择"
+                        <input type="text" ng-click="$ctrl.openModal('PUR_ORG')" ng-model="customer.PUR_ORG.ORG_NAME" value="{{customer.PUR_ORG.ORG_NAME}}" class="form-control" name="PUR_ORG" placeholder="请选择"
                                required
                                uib-tooltip="必输"
                                tooltip-placement="left"
                                tooltip-trigger="'mouseenter'"
                                tooltip-enable="!inputModel"
+                               key="PUR_ORG"
+                               keyText = "ORG_ID"
                         />
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
@@ -354,12 +356,14 @@
                         <small><strong>销售人员：</strong></small>
                     </div>
                     <div class="col-md-4" ng-class="{'has-error' : myForm.PUR_MAN.$invalid}">
-                        <input type="text" ng-click="$ctrl.openModal('PUR_MAN')" ng-model="myForm.PUR_MAN.NAME_CN" value="{{myForm.PUR_MAN.NAME_CN}}" class="form-control" name="PUR_MAN" placeholder="销售人员"
+                        <input type="text" ng-click="$ctrl.openModal('PUR_MAN')" ng-model="customer.PUR_MAN.NAME_CN" value="{{customer.PUR_MAN.NAME_CN}}" class="form-control" name="PUR_MAN" placeholder="销售人员"
                                required
                                uib-tooltip="必输"
                                tooltip-placement="left"
                                tooltip-trigger="'mouseenter'"
                                tooltip-enable="!inputModel"
+                               key="PUR_MAN"
+                               keyText = "SALESPERSON_ID"
                         />
                         <span class="glyphicon glyphicon-th-list form-control-feedback" style="padding-right:20px"></span>
                     </div>
@@ -411,6 +415,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">保存</button>
+    <button ng-if="buttonType =='add'" class="btn btn-primary" type="button" ng-click="$ctrl.save()">保存</button>
+    <button  ng-if="buttonType =='modify'" class="btn btn-primary" type="button" ng-click="$ctrl.modify()">修改</button>
     <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">取消</button>
 </div>

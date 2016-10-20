@@ -22,6 +22,7 @@
         </div>
     </div>
 </div>
+
 <br/>
 <div class="panel-group" id="tableComponent2">
     <div class="panel panel-info">
@@ -30,6 +31,7 @@
         </div>
         <div id="tableComponentTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="tableComponent2">
             <div class="panel-body">
+                <div uib-alert dismiss-on-timeout="{{alert.timeout}}" ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
                 <div class="btn-group">
                     <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'add'" ng-click="$ctrl.add()">增加</label>
                     <label class="btn btn-info" ng-model="radioModel" uib-btn-radio="'modify'" ng-click="$ctrl.modify()">修改</label>

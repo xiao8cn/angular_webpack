@@ -91,7 +91,7 @@ scm_web.config(function($stateProvider) {
                             { name: 'ADDRESS', enableCellEdit: false,displayName: '注册地址', enableColumnMenu: false},
                             { name: 'CUSTOMER_STATUS_NAME', enableCellEdit: false,displayName: '状态', enableColumnMenu: false},
                             { name: 'IMPORTANCE_DEGREE', enableCellEdit: false,displayName: '客户重要度', enableColumnMenu: false},
-                            { name: 'INVOICE_TYPE', enableCellEdit: false,displayName: '发票种类', enableColumnMenu: false},
+                            { name: 'INVOICE_TYPE_NAME', enableCellEdit: false,displayName: '发票种类', enableColumnMenu: false},
                             { name: 'PUR_MAN_TEL', enableCellEdit: false,displayName: '销售手机号码', enableColumnMenu: false},
                         ]
                     },
