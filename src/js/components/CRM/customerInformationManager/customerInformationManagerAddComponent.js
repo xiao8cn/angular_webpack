@@ -51,20 +51,20 @@ const customerInformationManagerAddComponent = {
                 console.log($scope.customer);
             }
 
+        /*let aaaparam = `param={"requestId":"123","page":{"start":"1","pageSize":"1"},"conditions":[{"field":"GID","value":"2","option":"0"}],"order":[{"field":"CREATE_TIME","type":"1"}]}`;
 
-        // let aaaparam = {"requestId":"123","page":{"start":"1","pageSize":"1"},"conditions":[{"field":"GID","value":"2","option":"0"}],"order":[{"field":"CREATE_TIME","type":"1"}]};
-
-        /*$http({
-            method : "POST",
-            url : "http://10.99.2.61:8082/SCM/PUB/pubStoreHouseQuery",
-            data : {param:aaaparam},
-            headers : {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Accept' : "application/json, text/javascript, *!/!*; q=0.01",
-            }
-        }).success(res=>{
-            console.log(res);
-        })*/
+         $http({
+         method : "POST",
+         url : "http://10.99.2.61:8082/SCM/PUB/pubStoreHouseQuery",
+         data : aaaparam,
+         withCredentials: true,
+         headers : {
+         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+         'Accept' : "application/json, text/javascript, *!/!*; q=0.01",
+         }
+         }).success(res=>{
+         console.log(res);
+         })*/
 
         param = JSON.stringify(param);
 

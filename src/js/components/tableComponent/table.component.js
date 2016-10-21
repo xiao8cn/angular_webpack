@@ -18,7 +18,9 @@ const tableComponent = {
          * 生命周期的加载
          */
         this.$onInit = ()=>{
+
             i18nService.setCurrentLang(lang);
+
             this.refreshTable(1,gridOption.paginationPageSize,href,param);
 
             let udfParam = {
@@ -61,8 +63,6 @@ const tableComponent = {
                     ctrl.AREA = res.DBData.AREA;
                     ctrl.CHANNEL = res.DBData.CHANNEL;
                 })
-
-
         }
 
         this.title = option.title;

@@ -1,14 +1,12 @@
-require("ui-select");
-require("bootstrap");
-require("angular-ui-grid");
-require("angular-ui-bootstrap");
-require("angular-ui-router");
-require("../common/angular-locale_zh-cn");
+import "ui-select";
+import "bootstrap";
+import "angular-ui-grid";
+import "angular-ui-bootstrap";
+import "angular-ui-router";
+import "../common/angular-locale_zh-cn";
 
 import indexComponent from "./index.component";
-
 import ComponentsModule from "../components/components";
-
 import servicesModule from "../service/services";
 
 let scm_web = angular.module("scm",[
@@ -16,11 +14,10 @@ let scm_web = angular.module("scm",[
     ComponentsModule.name,
     'ui.router',
     'ui.bootstrap',
-    'ui.router',
     'ui.select',
-]).component('app',indexComponent);
+]);
 
-scm_web.config(function($stateProvider) {
+scm_web.config(function($stateProvider,$locationProvider) {
     var states = [{
         name: 'hello',
         url: '/hello',
@@ -46,7 +43,6 @@ scm_web.config(function($stateProvider) {
         component : 'scmTable',
         resolve: {
             option : function(){
-
                 let href = "http://10.99.2.61:8083/SCM/CRM/CUSTOMER/getCustomer",
                     option = {
                     href : href,
@@ -104,7 +100,11 @@ scm_web.config(function($stateProvider) {
     states.forEach(function(state) {
         $stateProvider.state(state);
     });
+
+    $locationProvider.html5Mode(true)
 });
+
+scm_web.component('app',indexComponent);
 
 scm_web.filter('propsFilter', function() {
     return function(items, props) {
