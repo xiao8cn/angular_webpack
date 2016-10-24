@@ -14,14 +14,14 @@ const tableComponent = {
             gridOption = option.gridOption,
             param = option.param;
 
+        ctrl.loadFlag = true;
+
         /**
          * 生命周期的加载
          */
         this.$onInit = ()=>{
 
             i18nService.setCurrentLang(lang);
-
-            this.refreshTable(1,gridOption.paginationPageSize,href,param);
 
             let udfParam = {
                 "RequestID":"9999",
@@ -52,6 +52,8 @@ const tableComponent = {
                 }
             };
 
+            ctrl.loadFlag = false;
+
             $http.jsonp(`http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf?callback=JSON_CALLBACK&param=${JSON.stringify(udfParam)}`)
                 .success(res => {
                     console.log(res);
@@ -63,6 +65,9 @@ const tableComponent = {
                     ctrl.AREA = res.DBData.AREA;
                     ctrl.CHANNEL = res.DBData.CHANNEL;
                 })
+
+            this.refreshTable(1,gridOption.paginationPageSize,href,param);
+
         }
 
         this.title = option.title;
@@ -137,7 +142,9 @@ const tableComponent = {
          * 刪除 function
          */
         this.delete = function(){
-            if(ctrl.selectRows.length>=0){
+            if(ctrl.selectRows.length === 0 && $scope.alerts.length===0){
+                $scope.alerts.push({type:"warning",msg: "请选择一条数据!",timeout:"2000"});
+            }else{
                 let delGids = "";
                 delGids += "(";
                 ctrl.selectRows.forEach(row=>{
@@ -159,24 +166,22 @@ const tableComponent = {
 
                 let delHref = "http://10.99.2.61:8083/SCM/CRM/CUSTOMER/delCustomer",
                     delparam = {
-                     "RequestID":"9999",
-                     "RequestFormat":"JSON",
-                     "SessionKey":"c66b24c3-a692-4916-a668-254eab8e3306",
-                     "SessionTimeout":"60",
-                     "Version":"1.0",
-                     "DBRequest":{
-                        "Where":`GID in ${delGids}`
-                     }
-                 }
+                        "RequestID":"9999",
+                        "RequestFormat":"JSON",
+                        "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                        "SessionTimeout":"60",
+                        "Version":"1.0",
+                        "DBRequest":{
+                            "Where":`GID in ${delGids}`
+                        }
+                    }
 
                 scmAjaxService.getAjaxJsonp(delHref,delparam)
-                 .then(res=>{
-                     console.log(res);
-                     ctrl.refreshTable(1,gridOption.paginationPageSize,href,param);
-                     ctrl.selectRows = [];
-                 })
-            }else{
-                
+                    .then(res=>{
+                        console.log(res);
+                        ctrl.refreshTable(1,gridOption.paginationPageSize,href,param);
+                        ctrl.selectRows = [];
+                    })
             }
         }
 
@@ -252,6 +257,7 @@ const tableComponent = {
          * @param param     请求参数
          */
         ctrl.refreshTable = function(newPage,pageSize,href,param){
+            ctrl.loadFlag = false;
             if(param){
                 param.DBRequest.Page.Start = newPage*gridOption.paginationPageSize+1-gridOption.paginationPageSize + "";
                 param.DBRequest.Page.End = newPage*gridOption.paginationPageSize+"";
@@ -283,6 +289,8 @@ const tableComponent = {
                             })
                         }
 
+                        ctrl.loadFlag = true;
+
                     })
             }else{
                 $http.get(href)
@@ -290,6 +298,7 @@ const tableComponent = {
                         $scope.gridOptions.paginationCurrentPage = newPage;
                         $scope.gridOptions.totalItems = res.DBCount;
                         $scope.gridOptions.data = res;
+                        ctrl.loadFlag = true;
                     })
             }
         }

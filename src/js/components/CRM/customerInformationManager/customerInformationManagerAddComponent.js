@@ -15,7 +15,7 @@ const customerInformationManagerAddComponent = {
             param = {
                 "RequestID":"9999",
                 "RequestFormat":"JSON",
-                "SessionKey":"3f217300-5948-4e88-95ed-38920d83c9e1",
+                "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
                 "SessionTimeout":"60",
                 "Version":"1.0",
                 "DBRequest":{
@@ -179,7 +179,7 @@ const customerInformationManagerAddComponent = {
                 let param = {
                     "RequestID":"9999",
                     "RequestFormat":"JSON",
-                    "SessionKey":"072bf31c-b05e-4641-8174-09d0e7d4141a",
+                    "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
                     "SessionTimeout":"60",
                     "Version":"1.0",
                     "DBRequest":{
@@ -234,7 +234,7 @@ const customerInformationManagerAddComponent = {
                 let param = {
                     "RequestID":"9999",
                     "RequestFormat":"JSON",
-                    "SessionKey":"072bf31c-b05e-4641-8174-09d0e7d4141a",
+                    "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
                     "SessionTimeout":"60",
                     "Version":"1.0",
                     "DBRequest":{

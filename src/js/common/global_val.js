@@ -1,6 +1,6 @@
 
 let CinterFaceUrl = "http://10.99.2.61:8083",
-    sessionKey = "052dbe18-27ce-4577-bfdb-0928b540b1cc";
+    sessionKey = "bee07180-a4cb-4c34-9191-436eca665608";
 
 export const CommonComponentBox = {
     "CONTACT_CUST" : {

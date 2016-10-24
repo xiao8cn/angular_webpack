@@ -51,7 +51,7 @@ scm_web.config(function($stateProvider,$locationProvider) {
                     param : {
                         "RequestID":"9999",
                         "RequestFormat":"JSON",
-                        "SessionKey":"052dbe18-27ce-4577-bfdb-0928b540b1cc",
+                        "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
                         "SessionTimeout":"60",
                         "Version":"1.0",
                         "DBRequest":{
