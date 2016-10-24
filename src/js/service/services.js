@@ -1,6 +1,6 @@
 import ajaxService from "./common/ajaxService";
 
 const servicesModule = angular.module("common",[])
-    .service("ajaxService",ajaxService)
+    .service("scmAjaxService",ajaxService);
 
 export default servicesModule;

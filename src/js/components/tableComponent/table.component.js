@@ -144,7 +144,7 @@ const tableComponent = {
         this.delete = function(){
             if(ctrl.selectRows.length === 0 && $scope.alerts.length===0){
                 $scope.alerts.push({type:"warning",msg: "请选择一条数据!",timeout:"2000"});
-            }else{
+            }else if(ctrl.selectRows.length === 1){
                 let delGids = "";
                 delGids += "(";
                 ctrl.selectRows.forEach(row=>{
