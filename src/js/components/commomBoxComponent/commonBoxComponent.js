@@ -1,5 +1,4 @@
 import template from "./commonBoxComponent.html";
-import commonBoxController from "./commonBoxController";
 
 const commonBoxComponent = {
     template,
@@ -8,8 +7,7 @@ const commonBoxComponent = {
         close: '&',
         dismiss: '&'
     },
-    controller : commonBoxController
-    /*controller: function ($scope,$log,$http,$timeout,i18nService,scmAjaxService) {
+    controller: function ($scope,$log,$http,$timeout,i18nService,ajaxService) {
         let ctrl = this,
             option = ctrl.resolve.option || {},
             href = option.href,
@@ -17,8 +15,8 @@ const commonBoxComponent = {
             gridOption = option.gridOptions || {},
             param = option.param;
 
-        $scope.select = {};
-        $scope.textdata = {};
+        ctrl.select = {};
+        ctrl.textdata = {};
 
         ctrl.$onInit = function(){
             console.log("init");
@@ -40,20 +38,8 @@ const commonBoxComponent = {
         ctrl.gridOptions.paginationPageSize = gridOption.paginationPageSize || 5;
         ctrl.gridOptions.multiSelect = gridOption.multiSelect || false;
         ctrl.gridOptions.enableSelectAll = gridOption.enableSelectAll || false;
-        if(!gridOption.columnDefs){
-            ctrl.gridOptions.columnDefs = [
-                { name: 'CUSTOMER_CODE', enableCellEdit: false,displayName:"客户编码" ,enableColumnMenu: false},
-                { name: 'NAME_CN', enableCellEdit: false,displayName:"客户名称" ,enableColumnMenu: false},
-                { name: 'PUR_ORG', enableCellEdit: false,displayName:"销售组织" ,enableColumnMenu: false},
-                { name: 'IMPORTANCE_NAME', enableCellEdit: false,displayName:"客户等级" ,enableColumnMenu: false},
-                { name: 'CONTACTS', enableCellEdit: false,displayName:"联系人" ,enableColumnMenu: false},
-                { name: 'ADDRESS', enableCellEdit: false,displayName:"地址" ,enableColumnMenu: false},
-            ];
-        }else{
-            ctrl.gridOptions.columnDefs = gridOption.columnDefs;
-        }
+        ctrl.gridOptions.columnDefs = gridOption.columnDefs || [];
         ctrl.gridOptions.onRegisterApi = function(gridApi){
-            console.log(123);
             gridApi.selection.on.rowSelectionChanged($scope,function(row){
                 if(row.isSelected){
                     ctrl.selectRow = row;
@@ -63,25 +49,28 @@ const commonBoxComponent = {
             });
         };
 
-        scmAjaxService.getAjaxJsonp(href,param)
-            .then(res=>{
-                $timeout(()=>{
-                    ctrl.gridOptions.data = res.DBData;
-                },100);
+        ajaxService.getAjaxJsonp(href,param)
+            .success(res=>{
+                ctrl.gridOptions.data = res.DBData;
             })
 
         ctrl.search = () => {
-            let data = {};
+            let data = {},
+                oldWhere = this.param.DBRequest.Where;
 
-            for(let key in $scope.textdata){
-                data[key] = $scope.textdata[key];
+            for(let key in ctrl.textdata){
+                data[key] = ctrl.textdata[key];
             }
-            for(let key in $scope.select){
+            for(let key in ctrl.select){
                 if($scope.select[key]){
-                    data[key] = $scope.select[key].id;
+                    data[key] = ctrl.select[key].id;
                 }
             }
-            scmAjaxService.searchCommonBox(data,href,param,$scope)
+            ajaxService.searchCommonBox(data,href,param)
+                .success(res=>{
+                    gridOptions.data = res.DBData;
+                    param.DBRequest.Where = oldWhere;
+                })
         };
 
         ctrl.save = ()=> {
@@ -92,7 +81,7 @@ const commonBoxComponent = {
             ctrl.dismiss({$value: 'cancel'});
         }
 
-    }*/
+    }
 }
 
 export default commonBoxComponent;

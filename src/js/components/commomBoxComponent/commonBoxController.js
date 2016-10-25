@@ -3,15 +3,13 @@ class commonBoxController {
     /**
      * 构造函数
      * @param $scope
-     * @param $log
      * @param $http
-     * @param $timeout
      * @param i18nService
      * @param ajaxService
      */
     constructor($scope,$http,i18nService,ajaxService){
-        this.$http = $http;
         this.$scope = $scope;
+        this.$http = $http;
         this.i18nService = i18nService;
         this.ajaxService = ajaxService;
     }
@@ -51,12 +49,14 @@ class commonBoxController {
         this.gridOptions.columnDefs = gridOption.columnDefs || [];
         this.gridOptions.onRegisterApi = this.onRegisterApi;
 
+        this.$scope.gridOptions = this.gridOptions;
+
         /**
          * ajax 数据加载
          */
         this.ajaxService.getAjaxJsonp(href,param)
             .success(res=>{
-                this.gridOptions.data = res.DBData;
+                this.$scope.gridOptions.data = res.DBData;
             })
     }
 
@@ -97,20 +97,6 @@ class commonBoxController {
     cancel(){
         this.dismiss({$value: 'cancel'});
     }
-
-    /**
-     * 注册grid 的 事件
-     * @param gridApi
-     */
-    /*onRegisterApi(gridApi){
-        gridApi.selection.on.rowSelectionChanged($scope,function(row){
-            if(row.isSelected){
-                ctrl.selectRow = row;
-            }else{
-                ctrl.selectRow = {};
-            }
-        });
-    }*/
 
 }
 
