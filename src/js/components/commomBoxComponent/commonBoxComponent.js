@@ -1,13 +1,15 @@
 import template from "./commonBoxComponent.html";
+import commonBoxController from "./commonBoxController";
 
 const commonBoxComponent = {
-    template : template,
+    template,
     bindings : {
         resolve : "<",
         close: '&',
         dismiss: '&'
     },
-    controller: function ($scope,$log,$http,$timeout,i18nService,scmAjaxService) {
+    controller : commonBoxController
+    /*controller: function ($scope,$log,$http,$timeout,i18nService,scmAjaxService) {
         let ctrl = this,
             option = ctrl.resolve.option || {},
             href = option.href,
@@ -31,15 +33,15 @@ const commonBoxComponent = {
         ctrl.title = option.title || "往来户";
         ctrl.wheres = option.wheres || {};
         ctrl.selectRow = {};
-        $scope.gridOptions = gridOption;
-        $scope.gridOptions.enableCellEditOnFocus = gridOption.enableCellEditOnFocus || true;
-        $scope.gridOptions.enableGridMenu = gridOption.enableGridMenu || true;
-        $scope.gridOptions.paginationPageSizes = gridOption.paginationPageSizes || [5, 10, 20];
-        $scope.gridOptions.paginationPageSize = gridOption.paginationPageSize || 5;
-        $scope.gridOptions.multiSelect = gridOption.multiSelect || false;
-        $scope.gridOptions.enableSelectAll = gridOption.enableSelectAll || false;
+        ctrl.gridOptions = gridOption;
+        ctrl.gridOptions.enableCellEditOnFocus = gridOption.enableCellEditOnFocus || true;
+        ctrl.gridOptions.enableGridMenu = gridOption.enableGridMenu || true;
+        ctrl.gridOptions.paginationPageSizes = gridOption.paginationPageSizes || [5, 10, 20];
+        ctrl.gridOptions.paginationPageSize = gridOption.paginationPageSize || 5;
+        ctrl.gridOptions.multiSelect = gridOption.multiSelect || false;
+        ctrl.gridOptions.enableSelectAll = gridOption.enableSelectAll || false;
         if(!gridOption.columnDefs){
-            $scope.gridOptions.columnDefs = [
+            ctrl.gridOptions.columnDefs = [
                 { name: 'CUSTOMER_CODE', enableCellEdit: false,displayName:"客户编码" ,enableColumnMenu: false},
                 { name: 'NAME_CN', enableCellEdit: false,displayName:"客户名称" ,enableColumnMenu: false},
                 { name: 'PUR_ORG', enableCellEdit: false,displayName:"销售组织" ,enableColumnMenu: false},
@@ -48,10 +50,10 @@ const commonBoxComponent = {
                 { name: 'ADDRESS', enableCellEdit: false,displayName:"地址" ,enableColumnMenu: false},
             ];
         }else{
-            $scope.gridOptions.columnDefs = gridOption.columnDefs;
+            ctrl.gridOptions.columnDefs = gridOption.columnDefs;
         }
-
-        $scope.gridOptions.onRegisterApi = function(gridApi){
+        ctrl.gridOptions.onRegisterApi = function(gridApi){
+            console.log(123);
             gridApi.selection.on.rowSelectionChanged($scope,function(row){
                 if(row.isSelected){
                     ctrl.selectRow = row;
@@ -64,7 +66,7 @@ const commonBoxComponent = {
         scmAjaxService.getAjaxJsonp(href,param)
             .then(res=>{
                 $timeout(()=>{
-                    $scope.gridOptions.data = res.DBData;
+                    ctrl.gridOptions.data = res.DBData;
                 },100);
             })
 
@@ -90,7 +92,7 @@ const commonBoxComponent = {
             ctrl.dismiss({$value: 'cancel'});
         }
 
-    }
+    }*/
 }
 
 export default commonBoxComponent;

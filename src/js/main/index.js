@@ -16,11 +16,14 @@ import indexComponent from "./index.component";                 //主页组件
 import ComponentsModule from "../components/components";        //组件工厂
 import servicesModule from "../service/services";               //service 工厂
 
+import CommonModule from "../common/common";
+
 /**
  * scm module 的angular 基础配置
  * @type {angular.Module}
  */
 let scm_web = angular.module("scm",[
+    CommonModule.name,
     servicesModule.name,
     ComponentsModule.name,
     'ui.router',
