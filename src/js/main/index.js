@@ -14,17 +14,18 @@ import "../common/angular-locale_zh-cn";
  */
 import indexComponent from "./index.component";                 //主页组件
 import ComponentsModule from "../components/components";        //组件工厂
-import servicesModule from "../service/services";               //service 工厂
 
-import CommonModule from "../common/common";
+import ServiceModule from "../common/service.module";                    //service 等其他组件
+import FilterModule from "../common/filter.module";                    //filter 等其他组件
+
 
 /**
  * scm module 的angular 基础配置
  * @type {angular.Module}
  */
 let scm_web = angular.module("scm",[
-    CommonModule.name,
-    servicesModule.name,
+    ServiceModule.name,
+    FilterModule.name,
     ComponentsModule.name,
     'ui.router',
     'ui.bootstrap',
@@ -68,7 +69,7 @@ scm_web.config(function($stateProvider,$locationProvider) {
                         param : {                                                                       // param
                             "RequestID":"9999",
                             "RequestFormat":"JSON",
-                            "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                            "SessionKey":"a38d1a5f-686e-4c49-aac0-b28d1ce894bf",
                             "SessionTimeout":"60",
                             "Version":"1.0",
                             "DBRequest":{
@@ -86,7 +87,7 @@ scm_web.config(function($stateProvider,$locationProvider) {
                             paginationPageSizes: [10, 20, 30],                                          //分页的显示
                             paginationPageSize: 10,                                                     //每页显示数量
                             // enableCellEditOnFocus : true,                                               //是否允许编辑
-                            // enableGridMenu : true,                                                      //是否打开grid 工具
+                            enableGridMenu : true,                                                      //是否打开grid 工具
                             multiSelect : true ,                                                        //是否允许选择行
                             enableSelectAll : false,                                                    //是否允许全选
                             useExternalPagination: true,                                                //是否本地分页
@@ -141,72 +142,3 @@ scm_web.config(function($stateProvider,$locationProvider) {
  * 主页面的组件配置
  */
 scm_web.component('app',indexComponent);
-
-scm_web.filter('propsFilter', function() {
-    return function(items, props) {
-        var out = [];
-        if (angular.isArray(items)) {
-            var keys = Object.keys(props);
-
-            items.forEach(function(item) {
-                var itemMatches = false;
-
-                for (var i = 0; i < keys.length; i++) {
-                    var prop = keys[i];
-                    var text = props[prop].toLowerCase();
-                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                        itemMatches = true;
-                        break;
-                    }
-                }
-
-                if (itemMatches) {
-                    out.push(item);
-                }
-            });
-        } else {
-            // Let the output be the input untouched
-            out = items;
-        }
-
-        return out;
-    };
-});
-
-
-scm_web.service("scmAjaxService",function($http){
-    var serviceInstance = function(){
-        this.getAjaxJsonp = (href,param) =>{
-            return new Promise((resolve,reject) => {
-                param = JSON.stringify(param);
-                $http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`)
-                    .success(res => {
-                        resolve(res);
-                    })
-                    .error((res,status)=>{
-                        reject(res,status)
-                    })
-            });
-        };
-        this.searchCommonBox = (val,href,param,$scope)=>{
-            let oldWhere = param.DBRequest.Where,
-                where = oldWhere;
-
-            for (let key in val){
-                if(val[key]){
-                    where +=` and ${key} like ${val[key]}`;
-                }
-            }
-            param.DBRequest.Where = where;
-            this.getAjaxJsonp(href,param)
-                .then(res=>{
-                    $scope.$apply(function () {
-                        $scope.gridOptions.data = res.DBData || [];
-                        param.DBRequest.Where = oldWhere;
-                    });
-                })
-        }
-    };
-    return new serviceInstance();
-});
-

@@ -10,6 +10,22 @@ class ajaxService {
         return this.$http.jsonp(`${href}?callback=JSON_CALLBACK&param=${param}`);
     };
 
+    getAjaxPost(href,param){
+        if(typeof param === "object") {
+            param = JSON.stringify(param);
+        }
+        return new Promise((resolve,reject)=>{
+            $.ajax({
+                type:"post",
+                data : {param:param},
+                dataType : 'json',
+                url : href,
+                success : res=>resolve(res),
+                error : res=>reject(res)
+            })
+        })
+    }
+
     searchCommonBox(val,href,param) {
         let where = param.DBRequest.Where;
 
@@ -19,7 +35,7 @@ class ajaxService {
             }
         }
         param.DBRequest.Where = where;
-        return this.getAjaxJsonp(href,param)
+        return this.getAjaxPost(href,param)
     }
 }
 

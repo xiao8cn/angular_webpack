@@ -116,7 +116,7 @@
                     <div class="col-md-4">
                         <ui-select ng-model="customer.INVOICE_TYPE" name="INVOICE_TYPE" theme="select2" style="min-width:200px" title="Choose a person">
                             <ui-select-match placeholder="请选择">{{$select.selected.text}}</ui-select-match>
-                            <ui-select-choices repeat="invoice in $ctrl.INVOICE_TYPE | propsFilter: {id: $select.search, text: $select.search}">
+                            <ui-select-choices repeat="invoice in $ctrl.INVOICE_TYPE | propsFilter: {id: $select.search}">
                                 <div>{{invoice.text}}</div>
                                 <small>
                                     id: {{invoice.id}}

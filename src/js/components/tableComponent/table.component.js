@@ -5,7 +5,7 @@ const tableComponent = {
     bindings : {
         option : "<"
     },
-    controller : function ($scope,$http,$log,$timeout,i18nService,$uibModal,scmAjaxService) {
+    controller : function ($scope,$http,$log,$timeout,i18nService,$uibModal,ajaxService) {
 
         let ctrl = this,
             option = ctrl.option || {},
@@ -26,7 +26,7 @@ const tableComponent = {
             let udfParam = {
                 "RequestID":"9999",
                 "RequestFormat":"JSON",
-                "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                "SessionKey":"a38d1a5f-686e-4c49-aac0-b28d1ce894bf",
                 "SessionTimeout":"60",
                 "Version":"1.0",
                 "DBRequest":{
@@ -54,8 +54,8 @@ const tableComponent = {
 
             ctrl.loadFlag = false;
 
-            $http.jsonp(`http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf?callback=JSON_CALLBACK&param=${JSON.stringify(udfParam)}`)
-                .success(res => {
+            ajaxService.getAjaxPost("http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf",udfParam)
+                .then(res => {
                     console.log(res);
                     ctrl.CUSTOMER_TYPE = res.DBData.CUSTOMER_TYPE;
                     ctrl.INVOICE_TYPE = res.DBData.INVOICE_TYPE;
@@ -168,7 +168,7 @@ const tableComponent = {
                     delparam = {
                         "RequestID":"9999",
                         "RequestFormat":"JSON",
-                        "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                        "SessionKey":"a38d1a5f-686e-4c49-aac0-b28d1ce894bf",
                         "SessionTimeout":"60",
                         "Version":"1.0",
                         "DBRequest":{
@@ -176,7 +176,8 @@ const tableComponent = {
                         }
                     }
 
-                scmAjaxService.getAjaxJsonp(delHref,delparam)
+
+                ajaxService.getAjaxPost(delHref,delparam)
                     .then(res=>{
                         console.log(res);
                         ctrl.refreshTable(1,gridOption.paginationPageSize,href,param);
@@ -261,15 +262,14 @@ const tableComponent = {
             if(param){
                 param.DBRequest.Page.Start = newPage*gridOption.paginationPageSize+1-gridOption.paginationPageSize + "";
                 param.DBRequest.Page.End = newPage*gridOption.paginationPageSize+"";
-                scmAjaxService.getAjaxJsonp(href,param)
+
+                ajaxService.getAjaxPost(href,param)
                     .then(res=>{
                         if(res.DBData){
                             $timeout(()=>{
-                                console.log(ctrl);
-                                console.log(res.DBData);
                                 res.DBData.map(res=>{
                                     // ["CUSTOMER_TYPE", "INVOICE_TYPE", "TAX_TYPE", "IMPORTANCE_DEGREE", "TRADE", "AREA", "CHANNEL"]
-                                    if(res.CUSTOMER_TYPE){
+                                    if(res.CUSTOMER_TYPE&&res.CUSTOMER_TYPE!=0){
                                         let data = ctrl.CUSTOMER_TYPE.filter(res2=>res2.id == res.CUSTOMER_TYPE);
                                         res.CUSTOMER_TYPE_NAME = data[0].text;
                                     }

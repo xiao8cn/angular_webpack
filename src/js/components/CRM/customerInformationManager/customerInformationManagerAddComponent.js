@@ -10,12 +10,12 @@ const customerInformationManagerAddComponent = {
         dismiss: '&'
     },
     style : selectCss,
-    controller: function($scope,$http,$uibModal,scmAjaxService) {
+    controller: function($scope,$http,$uibModal,ajaxService) {
         let ctrl = this,
             param = {
                 "RequestID":"9999",
                 "RequestFormat":"JSON",
-                "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                "SessionKey":"a38d1a5f-686e-4c49-aac0-b28d1ce894bf",
                 "SessionTimeout":"60",
                 "Version":"1.0",
                 "DBRequest":{
@@ -68,8 +68,8 @@ const customerInformationManagerAddComponent = {
 
         param = JSON.stringify(param);
 
-        $http.jsonp(`http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf?callback=JSON_CALLBACK&param=${param}`)
-            .success(res => {
+        ajaxService.getAjaxPost("http://10.99.2.61:8083/SCM/SystemBase/Udf/getmutiUdf",param)
+            .then(res => {
                 ctrl.CUSTOMER_TYPE = res.DBData.CUSTOMER_TYPE;
                 ctrl.INVOICE_TYPE = res.DBData.INVOICE_TYPE;
                 ctrl.TAX_TYPE = res.DBData.TAX_TYPE;
@@ -84,8 +84,6 @@ const customerInformationManagerAddComponent = {
                 if($scope.customer.INVOICE_TYPE){
                     $scope.customer.INVOICE_TYPE = ctrl.INVOICE_TYPE.filter(res=>res.id == $scope.customer.INVOICE_TYPE)[0]
                 }
-
-                // $scope.customer.CUSTOMER_TYPE = ctrl.CUSTOMER_TYPE[0];
             })
 
         ctrl.CUSTOMER_STATUS = [{"id":"1", "text":"启用"}, {"id":"2", "text":"禁用"}];
@@ -179,7 +177,7 @@ const customerInformationManagerAddComponent = {
                 let param = {
                     "RequestID":"9999",
                     "RequestFormat":"JSON",
-                    "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                    "SessionKey":"a38d1a5f-686e-4c49-aac0-b28d1ce894bf",
                     "SessionTimeout":"60",
                     "Version":"1.0",
                     "DBRequest":{
@@ -193,7 +191,7 @@ const customerInformationManagerAddComponent = {
                     }
                 };
 
-                scmAjaxService.getAjaxJsonp("http://10.99.2.61:8083/SCM/CRM/CUSTOMER/insertCustomer",param)
+                ajaxService.getAjaxPost("http://10.99.2.61:8083/SCM/CRM/CUSTOMER/insertCustomer",param)
                     .then(res=>{
                         console.log(res);
                         ctrl.close({$value: "success"});
@@ -234,7 +232,7 @@ const customerInformationManagerAddComponent = {
                 let param = {
                     "RequestID":"9999",
                     "RequestFormat":"JSON",
-                    "SessionKey":"bee07180-a4cb-4c34-9191-436eca665608",
+                    "SessionKey":"a38d1a5f-686e-4c49-aac0-b28d1ce894bf",
                     "SessionTimeout":"60",
                     "Version":"1.0",
                     "DBRequest":{
@@ -245,7 +243,7 @@ const customerInformationManagerAddComponent = {
 
                 console.log(param);
 
-                scmAjaxService.getAjaxJsonp("http://10.99.2.61:8083/SCM/CRM/CUSTOMER/updateCustomer",param)
+                ajaxService.getAjaxPost("http://10.99.2.61:8083/SCM/CRM/CUSTOMER/updateCustomer",param)
                     .then(res=>{
                         console.log(res);
                         ctrl.close({$value: "success"});

@@ -20,43 +20,44 @@ const commonBoxComponent = {
 
         ctrl.$onInit = function(){
             console.log("init");
+
+            i18nService.setCurrentLang(lang);
+
+            ctrl.title = option.title || "往来户";
+            ctrl.wheres = option.wheres || {};
+            ctrl.selectRow = {};
+            ctrl.gridOptions = gridOption;
+            ctrl.gridOptions.enableCellEditOnFocus = gridOption.enableCellEditOnFocus || true;
+            ctrl.gridOptions.enableGridMenu = gridOption.enableGridMenu || true;
+            ctrl.gridOptions.paginationPageSizes = gridOption.paginationPageSizes || [5, 10, 20];
+            ctrl.gridOptions.paginationPageSize = gridOption.paginationPageSize || 5;
+            ctrl.gridOptions.multiSelect = gridOption.multiSelect || false;
+            ctrl.gridOptions.enableSelectAll = gridOption.enableSelectAll || false;
+            ctrl.gridOptions.columnDefs = gridOption.columnDefs || [];
+            ctrl.gridOptions.onRegisterApi = function(gridApi){
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected){
+                        ctrl.selectRow = row;
+                    }else{
+                        ctrl.selectRow = {};
+                    }
+                });
+            };
+
+            ajaxService.getAjaxPost(href,param)
+                .then(res=>{
+                    console.log(res);
+                    ctrl.gridOptions.data = res.DBData;
+                })
         }
 
         $scope.look = function(event){
             console.log(event.select);
         }
 
-        i18nService.setCurrentLang(lang);
-
-        ctrl.title = option.title || "往来户";
-        ctrl.wheres = option.wheres || {};
-        ctrl.selectRow = {};
-        ctrl.gridOptions = gridOption;
-        ctrl.gridOptions.enableCellEditOnFocus = gridOption.enableCellEditOnFocus || true;
-        ctrl.gridOptions.enableGridMenu = gridOption.enableGridMenu || true;
-        ctrl.gridOptions.paginationPageSizes = gridOption.paginationPageSizes || [5, 10, 20];
-        ctrl.gridOptions.paginationPageSize = gridOption.paginationPageSize || 5;
-        ctrl.gridOptions.multiSelect = gridOption.multiSelect || false;
-        ctrl.gridOptions.enableSelectAll = gridOption.enableSelectAll || false;
-        ctrl.gridOptions.columnDefs = gridOption.columnDefs || [];
-        ctrl.gridOptions.onRegisterApi = function(gridApi){
-            gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                if(row.isSelected){
-                    ctrl.selectRow = row;
-                }else{
-                    ctrl.selectRow = {};
-                }
-            });
-        };
-
-        ajaxService.getAjaxJsonp(href,param)
-            .success(res=>{
-                ctrl.gridOptions.data = res.DBData;
-            })
-
         ctrl.search = () => {
             let data = {},
-                oldWhere = this.param.DBRequest.Where;
+                oldWhere = param.DBRequest.Where;
 
             for(let key in ctrl.textdata){
                 data[key] = ctrl.textdata[key];
@@ -66,9 +67,10 @@ const commonBoxComponent = {
                     data[key] = ctrl.select[key].id;
                 }
             }
+
             ajaxService.searchCommonBox(data,href,param)
-                .success(res=>{
-                    gridOptions.data = res.DBData;
+                .then(res=>{
+                    $timeout(()=>{ctrl.gridOptions.data = res.DBData},10)
                     param.DBRequest.Where = oldWhere;
                 })
         };
